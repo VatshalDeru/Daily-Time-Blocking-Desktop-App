@@ -1,0 +1,18 @@
+{
+    "appId": "com.v-deru.daily-time-blocking-desktop-app",
+    "files": ["dist-electron", "dist-react"],
+    "extraResources": ["dist-electron/preload.cjs", "src/ui/assets/**"],
+    "icon": "src/ui/assets/plannerAppIcon.png",
+    "forceCodeSigning": false,
+    "artifactBuildStarted": false,
+    "mac": {
+        "target": "dmg"
+    },
+    "linux": {
+        "target": "AppImage",
+        "category": "Utility"
+    },
+    "win": {
+        "target": ["portable"]
+    }
+}
