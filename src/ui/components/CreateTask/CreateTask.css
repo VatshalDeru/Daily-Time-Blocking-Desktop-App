@@ -1,0 +1,164 @@
+.createTaskContainer {
+  position: fixed;
+  top: 50%;
+  width: 35em;
+  right: 0;
+  transform: translateY(-50%);
+  margin-right: 1.25em;
+  height: 95vh;
+  border-radius: 2em;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  display: none;
+}
+.createTaskContainer .topSection {
+  background-color: #F88E86;
+  flex: 1;
+  padding-inline: 2.5em;
+  display: flex;
+  flex-direction: column;
+}
+.createTaskContainer .topSection .buttonContainer {
+  display: flex;
+  justify-content: end;
+  gap: 0.8em;
+  margin-top: 1em;
+}
+.createTaskContainer .topSection .taskInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskIcon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border: 4px white solid;
+  border-radius: 3em;
+  width: 5em;
+  padding-block: 4em;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskIcon svg {
+  width: 5em;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskIcon button {
+  display: flex;
+  align-items: center;
+  padding: 0.5em;
+  width: -moz-min-content;
+  width: min-content;
+  background-color: #1c1c1e;
+  border-radius: 50%;
+  border: none;
+  position: absolute;
+  left: -0.5em;
+  bottom: 0;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskIcon button .editIconBtn {
+  width: 1em;
+  height: 1em;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .taskTime p {
+  color: #F9C7C4;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.2em;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection input {
+  background-color: transparent;
+  border: unset;
+  border-bottom: 1px white solid;
+  width: 7.75em;
+  padding-block: 0.25em;
+  font-size: 2.75rem;
+  font-weight: bold;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection input:focus {
+  outline: none;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection button {
+  width: 2em;
+  height: 2em;
+  background-color: transparent;
+  border: 3px white solid;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection button:hover {
+  outline: 4px rgba(255, 255, 255, 0.5) solid;
+}
+.createTaskContainer .bottomSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1c1c1e;
+  height: auto;
+  padding-inline: 2em;
+  flex: 2;
+}
+.createTaskContainer .bottomSection .taskTimeDateInputContainer {
+  background-color: #323232;
+  border: 1px solid #838383;
+  width: 30em;
+  border-radius: 1em;
+  margin-top: 1.5em;
+}
+.createTaskContainer .bottomSection .taskTimeDateInputContainer .dayInputContainer, .createTaskContainer .bottomSection .taskTimeDateInputContainer .timeInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5em 1em;
+  font-size: 1.3rem;
+}
+.createTaskContainer .bottomSection .taskTimeDateInputContainer .dayInputContainer {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+.createTaskContainer .bottomSection .taskTimeDateInputContainer .timeInputContainer {
+  display: flex;
+}
+.createTaskContainer .bottomSection .subTasksNotesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2em;
+  width: 30em;
+  border-radius: 1em;
+  background-color: #323232;
+  border: 1px solid #838383;
+  overflow: none;
+}
+.createTaskContainer .bottomSection .subTasksNotesContainer .subtaskInput, .createTaskContainer .bottomSection .subTasksNotesContainer .taskNotes {
+  width: 100%;
+  padding: 1em;
+  box-sizing: border-box;
+}
+.createTaskContainer .bottomSection .subTasksNotesContainer .subtaskInput input, .createTaskContainer .bottomSection .subTasksNotesContainer .taskNotes textarea {
+  border: none;
+  background-color: transparent;
+  width: inherit;
+  font-size: 1.4rem;
+}
+.createTaskContainer .bottomSection .subTasksNotesContainer .subtaskInput input:focus, .createTaskContainer .bottomSection .subTasksNotesContainer .taskNotes textarea:focus {
+  outline: none;
+}
+.createTaskContainer .bottomSection .subTasksNotesContainer .subtaskInput {
+  border-bottom: 1px solid #838383;
+}
+.createTaskContainer .bottomSection .subTasksNotesContainer .taskNotes textarea {
+  width: 100% !important;
+  overflow: none;
+  resize: none;
+  padding: 0;
+}
+.createTaskContainer .bottomSection .modifyTaskButtons {
+  display: flex;
+  justify-content: space-between;
+  right: 2em;
+  width: 100%;
+  margin-top: 8em !important;
+}/*# sourceMappingURL=CreateTask.css.map */

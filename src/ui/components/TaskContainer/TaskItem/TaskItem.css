@@ -1,0 +1,50 @@
+.taskItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2em;
+  margin-block: 0.25em;
+  border-radius: 1em;
+  box-sizing: border-box;
+}
+.taskItem .taskInfo {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+.taskItem .taskInfo .leftTime {
+  color: #5E5E62;
+}
+.taskItem .taskInfo .taskIconContainer {
+  display: flex;
+  width: 3em;
+  height: 3em;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #5E5E62;
+  border: 1px #888888 solid;
+}
+.taskItem .taskInfo .titleTimeContainer {
+  line-height: 1.4em;
+  margin-bottom: 1.2em;
+}
+.taskItem .taskInfo .titleTimeContainer .topTime {
+  color: #5E5E62;
+}
+.taskItem .taskInfo .titleTimeContainer h2 {
+  font-size: 1.7rem;
+}
+.taskItem .checkBox {
+  width: 2em;
+  height: 2em;
+  border: 3px #F88E86 solid;
+  background-color: transparent;
+}
+.taskItem .checkBox:hover {
+  outline: 6px rgba(248, 142, 134, 0.25) solid;
+}
+.taskItem:hover {
+  background-color: #2F2F34;
+  cursor: pointer;
+}/*# sourceMappingURL=TaskItem.css.map */

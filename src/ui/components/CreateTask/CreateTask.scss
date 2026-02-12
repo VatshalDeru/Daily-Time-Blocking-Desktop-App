@@ -1,0 +1,208 @@
+.createTaskContainer {
+    position: fixed;
+    top: 50%;
+    width: 35em;
+    right: 0;
+    transform: translateY(-50%);
+    margin-right: 1.25em;
+    height: 95vh;
+    // border: 1px red solid;
+    border-radius: 2em;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    display: none;
+
+    .topSection {
+        background-color: #F88E86;
+        flex: 1;
+        padding-inline: 2.5em;
+        display: flex;
+        flex-direction: column;
+        
+        .buttonContainer {
+            display: flex;
+            justify-content: end;
+            gap: 0.8em;
+            margin-top: 1em;
+        }
+
+        .taskInfoContainer {
+            // margin-inline: 3em;
+            display: flex;
+            justify-content: space-between;
+            // gap: 1em;
+            align-items: center;
+            // justify-content: center;
+
+            .taskIcon {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                border: 4px white solid;
+                border-radius: 3em;
+                width: 5em;
+                padding-block: 4em;
+
+                svg {
+                    width: 5em;
+                }
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    padding: 0.5em;
+                    width:min-content;
+                    background-color: #1c1c1e;
+                    border-radius: 50%;
+                    border: none;
+                    position: absolute;
+                    left: -0.5em;
+                    bottom: 0;
+
+                    .editIconBtn {
+                        width: 1em;
+                        height: 1em;
+                    }
+                }
+            }
+
+            .taskInfo {
+                // border: 1px red solid;
+                .taskTime p {
+                    color: #F9C7C4;
+                }
+
+                .inputSection {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 0.2em;
+                    // border: 1px red solid;
+
+                    input {
+                        background-color: transparent;
+                        border: unset;
+                        border-bottom: 1px white solid;
+                        width: 7.75em;
+                        padding-block: 0.25em;
+                        font-size: 2.75rem;
+                        font-weight: bold;
+
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+
+                    button {
+                        width: 2em;
+                        height: 2em;
+                        background-color: transparent;
+                        border: 3px white solid;
+                        
+                        &:hover {
+                            outline: 4px rgb(255, 255, 255, 0.5) solid;
+                            // opacity: 50%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .bottomSection {
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: center;
+        background-color: #1c1c1e;
+        height: auto;
+        padding-inline: 2em;
+        flex: 2;
+
+        .taskTimeDateInputContainer {
+            background-color: #323232;
+            border: 1px solid #838383;
+            width: 30em;
+            border-radius: 1em;
+            margin-top: 1.5em;
+            // padding: 1em;
+
+            .dayInputContainer, .timeInputContainer {
+                display: flex;
+                align-items: center;
+                gap: 1em;
+                padding: 0.5em 1em;
+                font-size: 1.3rem;
+            }
+            
+            .dayInputContainer {
+                display: flex;
+                width: 100%;
+                border-bottom: 1px solid grey;
+                
+            }
+
+            .timeInputContainer {
+                display: flex;
+            }
+        }
+
+        .subTasksNotesContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2em;
+            width: 30em;
+            border-radius: 1em;
+            background-color: #323232;
+            border: 1px solid #838383;
+            overflow: none;
+
+            .subtaskInput, .taskNotes {
+                width: 100%;
+                padding: 1em;
+                box-sizing: border-box;
+            }
+
+            .subtaskInput input, .taskNotes textarea {
+                border: none;
+                background-color: transparent;
+                // border: 1px red solid;
+                width: inherit;
+                font-size: 1.4rem;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .subtaskInput {
+               border-bottom: 1px solid #838383;
+            }
+
+            .taskNotes {
+
+                textarea {
+                    // all: unset;
+                    width: 100% !important;
+                    overflow: none;
+                    resize: none;
+                    padding: 0;
+
+                    
+                }
+            }
+        }
+
+        .modifyTaskButtons {
+            display: flex;
+            justify-content: space-between;
+            // border: 1px red solid;
+            right: 2em;
+            width: 100%;
+            margin-top: 8em !important;
+        }
+    }
+}

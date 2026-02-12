@@ -1,0 +1,9 @@
+.taskContainer {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #1C1C1E;
+  box-sizing: border-box;
+  border-radius: 4% 4% 0 0;
+  padding-inline: 7em;
+  padding-block: 0.2em;
+}/*# sourceMappingURL=TaskContainer.css.map */

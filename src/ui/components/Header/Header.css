@@ -1,0 +1,39 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 6em;
+  padding: 1.2em 2em; /* use padding instead of margin */
+  box-sizing: border-box;
+}
+header .dateControlsContainer {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+header .dateControlsContainer button {
+  background-color: transparent;
+  border: none;
+}
+header .dateControlsContainer .calenderButton {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+header .dateControlsContainer .calenderButton h1 {
+  margin: 0em;
+  font-size: 3rem;
+}
+header .dateControlsContainer .calenderButton h1 span {
+  color: #00AAFF;
+}
+header .dateControlsContainer .calenderButton svg {
+  margin-top: 0.3em;
+}
+header .dateControlsContainer .changeDateButtons {
+  margin-top: 0.3em;
+}
+header .dateControlsContainer .changeDateButtons .prevDayButton {
+  margin-right: 1em;
+}/*# sourceMappingURL=Header.css.map */

@@ -1,0 +1,31 @@
+.dayNavbarItem {
+    display: flex;
+    height: 5.8em;
+    padding: 1em 2em;
+    border-radius: 25%;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+
+    .dayNumber {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #00AAFF;
+        width: 2em;
+        height: 2em;
+        text-align: center;
+        border-radius: 50%;
+        font-weight: bold;
+    }
+}
+
+.dayNavbarItem:hover {
+    background-color: #00AAFF;
+    cursor: pointer;
+
+    .dayNumber {
+        background-color: white;
+        color: #00AAFF;
+    }
+}

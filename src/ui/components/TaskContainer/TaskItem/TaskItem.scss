@@ -1,0 +1,57 @@
+.taskItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2em;
+    margin-block: 0.25em;
+    border-radius: 1em;
+    box-sizing: border-box;
+
+    .taskInfo {
+        display: flex;
+        align-items: center;
+        gap: 2em;
+
+        .leftTime {
+            color: #5E5E62;
+        }
+
+        .taskIconContainer {
+            display: flex;
+            width: 3em;
+            height: 3em;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: #5E5E62;
+            border: 1px #888888 solid;
+        }
+        .titleTimeContainer {
+            line-height: 1.4em;
+            margin-bottom: 1.2em;
+            .topTime {
+                color: #5E5E62;
+            }
+            h2 {
+                font-size: 1.7rem;
+            }
+        }
+    }
+
+    .checkBox {
+        width: 2em;
+        height: 2em;
+        border: 3px #F88E86 solid;
+        background-color: transparent;
+    }
+
+    .checkBox:hover {
+        outline: 6px rgb(248, 142, 134, 0.25) solid;
+    }
+
+    &:hover {
+        background-color: #2F2F34;
+        cursor: pointer;
+    }
+}
+

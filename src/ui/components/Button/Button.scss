@@ -1,0 +1,48 @@
+
+
+.settings, .close, .options, .delete {
+    background-color: #1c1c1e;
+    border: 1px #656565 solid;
+    // width: 4em;
+    // height: 4em;
+    // border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+button {
+    border-radius: 50%;
+}
+
+button:hover  {
+    cursor: pointer;
+}
+
+.create-task{
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    right: 0;
+    width: 4em;
+    height: 4em;
+    margin: 3em;
+    background-color: #0094DF;
+    border: none;
+    
+    svg {
+        margin: auto;
+    }
+
+    &:hover {
+        border: 3px white solid;
+    }
+}
+
+.update {
+    border-radius: 2em;
+    border: none;
+    width: 8em;
+    background-color: #F88E86;
+    font-weight: bold
+};
