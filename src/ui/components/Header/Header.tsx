@@ -1,4 +1,6 @@
-import Button from "../Button/Button"
+import { useContext } from "react";
+import Button from "../Button/Button";
+import { ModalContext } from "../../context/ModalContext";
 
 type HeaderProps = {
     month: string;
@@ -6,23 +8,25 @@ type HeaderProps = {
 }
 
 export default function Header({ month, year }: HeaderProps) {
+    const { calenderModal } = useContext(ModalContext);
+    console.log(calenderModal)
     return <header>
-            <div className="dateControlsContainer">
+            <div className="dateControlsContainer" onClick={calenderModal.showModal}>
                 <button className="calenderButton">
                     <h1>{month} <span>{year}</span></h1>
                     <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.72262 10.6065L17.501 2.121L15.5568 0L8.7505 7.425L1.94425 0L0 2.121L7.77837 10.6065C8.03622 10.8877 8.3859 11.0457 8.7505 11.0457C9.1151 11.0457 9.46477 10.8877 9.72262 10.6065Z" fill="#00AAFF"/>
+                        <path fillRule="evenodd" clipRule="evenodd" d="M9.72262 10.6065L17.501 2.121L15.5568 0L8.7505 7.425L1.94425 0L0 2.121L7.77837 10.6065C8.03622 10.8877 8.3859 11.0457 8.7505 11.0457C9.1151 11.0457 9.46477 10.8877 9.72262 10.6065Z" fill="#00AAFF"/>
                     </svg>
                 </button>
                 <div className="changeDateButtons">
                     <button className="prevDayButton">
                         <svg  width="20" height="40" viewBox="0 0 20 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M5.3935 21.185L13.879 30.6133L16 28.2567L8.575 20.0067L16 11.7567L13.879 9.4L5.3935 18.8283C5.11229 19.1409 4.95432 19.5647 4.95432 20.0067C4.95432 20.4486 5.11229 20.8725 5.3935 21.185Z" fill="white"/>
+                            <path fillRule="evenodd" clipRule="evenodd" d="M5.3935 21.185L13.879 30.6133L16 28.2567L8.575 20.0067L16 11.7567L13.879 9.4L5.3935 18.8283C5.11229 19.1409 4.95432 19.5647 4.95432 20.0067C4.95432 20.4486 5.11229 20.8725 5.3935 21.185Z" fill="white"/>
                         </svg> 
                     </button>
                     <button className="nextDayButton">
                         <svg  width="20" height="40" viewBox="0 0 20 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6065 21.185L6.121 30.6133L4 28.2567L11.425 20.0067L4 11.7567L6.121 9.4L14.6065 18.8283C14.8877 19.1409 15.0457 19.5647 15.0457 20.0067C15.0457 20.4486 14.8877 20.8725 14.6065 21.185Z" fill="white"/>
+                            <path fillRule="evenodd" clipRule="evenodd" d="M14.6065 21.185L6.121 30.6133L4 28.2567L11.425 20.0067L4 11.7567L6.121 9.4L14.6065 18.8283C14.8877 19.1409 15.0457 19.5647 15.0457 20.0067C15.0457 20.4486 14.8877 20.8725 14.6065 21.185Z" fill="white"/>
                         </svg>
                     </button>
                 </div>

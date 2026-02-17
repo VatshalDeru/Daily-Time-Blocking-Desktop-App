@@ -1,1 +1,57 @@
-/*# sourceMappingURL=CalenderModal.css.map */
+.calenderModal {
+  background-color: #2F2F2F;
+  width: 25em;
+  height: 25em;
+  padding: 1em;
+  position: absolute;
+  left: 2em;
+  border-radius: 1em;
+}
+.calenderModal .headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.calenderModal .headerContainer .date {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1.5rem;
+}
+.calenderModal .headerContainer .date span {
+  color: #00AAFF;
+}
+.calenderModal .calenderGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.calenderModal .calenderGrid .calenderDaysRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 1em;
+  gap: 6px;
+  text-align: center;
+  color: #666767;
+  font-weight: 600;
+}
+.calenderModal .calenderGrid .calenderDatesGrid {
+  display: grid;
+  margin-top: 1em;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 20px 0px;
+  text-align: center !important;
+}
+.calenderModal .calenderGrid .calenderDatesGrid div {
+  display: flex;
+  justify-self: center;
+  border: 1px solid #666767;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+}
+.calenderModal .calenderGrid .calenderDatesGrid div p {
+  text-align: center;
+  margin: auto;
+}/*# sourceMappingURL=CalenderModal.css.map */

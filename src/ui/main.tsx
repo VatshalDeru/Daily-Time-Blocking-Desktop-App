@@ -8,11 +8,15 @@ import './components/WeekNavbar/DayNavbarItems/DayNavbarItems.scss';
 import './components/TaskContainer/TaskContainer.scss'
 import './components/TaskContainer/TaskItem/TaskItem.scss'
 import './components/Calender/CalenderModal.scss'
+import './components/Calender/MonthYearSelectorModal/MonthYearSelectorModal.scss'
 import './components/CreateTask/CreateTask.scss'
 import App from './App.tsx'
+import ModalContextProvider from './context/ModalContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ModalContextProvider>
+      <App />
+    </ModalContextProvider>
   </StrictMode>
 )

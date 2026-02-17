@@ -1,0 +1,75 @@
+.calenderModal {
+    background-color: #2F2F2F;
+    width: 25em;
+    height: 25em;
+    padding: 1em;
+    position: absolute;
+    left: 2em;
+    border-radius: 1em;
+    // display: none;
+
+    .headerContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        cursor: pointer;
+        // border: 1px red solid;
+
+
+        .date {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+            font-size: 1.5rem;
+
+            span {
+                color: #00AAFF;
+            }
+        }
+    }
+
+    .calenderGrid {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        // display: grid;
+        // grid-template-columns:  20% 20% 20% 20% 20% 20% 20%;
+        // grid-template-rows:  20% 20% 20% 20% 20% 20% 20%;
+        .calenderDaysRow {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin-top: 1em;
+            gap: 6px;
+            text-align: center;
+            color: #666767;
+            font-weight:600;
+        }
+
+        .calenderDatesGrid {
+            display: grid;
+            margin-top: 1em;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 20px 0px;
+            text-align: center !important;
+
+            div {
+                display: flex;
+                justify-self: center;
+                // align-items: center;
+                border: 1px solid #666767;
+                width: 2em;
+                height: 2em;
+                border-radius: 50%;
+                // grid-column-start: 2;
+                // grid-column-end: 5;
+
+                p {
+                    text-align: center;
+                    margin: auto;
+                }
+            }
+        }
+        
+    }
+}

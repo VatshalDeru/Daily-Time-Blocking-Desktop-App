@@ -1,0 +1,74 @@
+.monthYearSelectorModalContainer {
+    // border: 1px red solid;
+    height: 18em;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    ul {
+        list-style: none;
+        padding-top: calc(7em / 2 - 2.5em / 2); /* container height / 2 - item height / 2 */
+        padding-bottom: calc(7em / 2 - 2.5em / 2);
+
+        li {
+            height: 1.6em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            scroll-snap-align: center;
+            // border: 1px red solid;
+            margin-block: 1em;
+            color: grey;
+        }
+
+        .selected {
+            color: white;
+        }
+    }
+
+    .monthSelectorOverlay, .yearSelectorOverlay {
+        position: absolute;
+        pointer-events: none;
+        // border-top: 2px rgb(255, 255, 255, 0.5) solid;
+        // border-bottom: 2px rgb(255, 255, 255, 0.5) solid;
+
+        height: 2.8em;
+        
+        top: 50%;
+        
+        
+        z-index: 10;
+    }
+    
+    .monthSelectorOverlay {
+        width: 5.7em;
+        transform: translateY(-70%);
+        left: 5.7em;
+    }
+
+    .yearSelectorOverlay {
+        transform: translateY(-70%);
+        right: 5.6em;
+        width: 3.4em;
+    }
+
+    .monthSelector, .yearSelector {
+        position: relative;
+        // border: 1px red solid;
+        height: 7em;
+        overflow-y:scroll;
+        scroll-snap-type: y mandatory;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+
+    }
+
+    .monthSelector {
+        font-size: 1.2rem;
+    }
+
+    .yearSelector {
+        font-size: 1.5rem;
+    }
+}
