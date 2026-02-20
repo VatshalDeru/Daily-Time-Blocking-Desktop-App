@@ -7,7 +7,7 @@ import Button from './components/Button/Button'
 import CreateTask from './components/CreateTask/CreateTask'
 import CalenderModal from './components/Calender/CalenderModal'
 import { useContext } from 'react'
-import { ModalContext } from './context/ModalContext'
+import { ModalContext } from './store/Modal/ModalContext'
 
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
   const { calenderModal } = useContext(ModalContext)
   return (
     <div className='appContainer'>
-      <Header month='February' year={2026}/>
+      <Header/>
       {calenderModal.modalVisibility && <CalenderModal></CalenderModal>}
       <WeekNavbar/>
       <CreateTask/>

@@ -1,38 +1,6 @@
-import { createContext, useReducer } from "react";
-import CalenderModal from "../components/Calender/CalenderModal";
-
-type modalContentType = 'calender-grid' | 'month-year-selector'
-
-type ModalContextType = {
-    calenderModal: {
-        modalVisibility: boolean,
-        showModal: () => void,
-        hideModal: () => void,
-        modalContent: modalContentType,
-        toggleModalContent: () => void
-    },
-    createTaskModal: {
-        modalVisibility: boolean,
-        showModal: () => void,
-        hideModal: () => void,
-    }
-}
-
-export const ModalContext = createContext<ModalContextType>({
-    calenderModal: {
-        modalVisibility: false,
-        showModal: () => {},
-        hideModal: () => {},
-        modalContent: 'calender-grid',
-        toggleModalContent: () => {}
-    },
-    createTaskModal: {
-        modalVisibility: false,
-        showModal: () => {},
-        hideModal: () => {},
-    }
-});
-
+import { useReducer, useRef } from "react";
+import { ModalContext } from "./ModalContext";
+import type { modalContentType, ModalContextType } from "./ModalContext";
 
 type ModalName = "calenderModal" | "createTaskModal";
 
@@ -42,29 +10,33 @@ type Action =
   | { type: "TOGGLE_CALENDER_MODAL_CONTENT"; }
   ;
   
-  type ModalState = {
-      calenderModal: {
-          modalVisibility: boolean;
-          modalContent: modalContentType;
-        };
-        createTaskModal: {
-            modalVisibility: boolean;
-        };
+type ModalStateType = {
+    calenderModal: {
+        modalVisibility: boolean;
+        modalContent: modalContentType;
     };
-    
-    const INITIAL_MODAL_STATE_OBJECT: ModalState = {
-        calenderModal: {
-            modalVisibility: false,
-            modalContent: 'calender-grid',
-        },
-        createTaskModal: {
-            modalVisibility: false,
-        }
+    calenderButtonRef: React.RefObject<HTMLButtonElement | null>;
+    createTaskModal: {
+        modalVisibility: boolean;
     };
+};
 
-function modalReducer(state: ModalState, action: Action): ModalState {
+const INITIAL_MODAL_STATE_OBJECT: ModalStateType = {
+    calenderModal: {
+        modalVisibility: false,
+        modalContent: 'calender-grid',
+    },
+    calenderButtonRef: { current: null },
+    createTaskModal: {
+        modalVisibility: false,
+    }
+};
+
+
+function modalReducer(state: ModalStateType, action: Action): ModalStateType {
     switch (action.type) {
         case "SHOW_MODAL" :
+            console.log(state.calenderModal.modalVisibility);
             return {
                 ...state,
                 [action.payload.modalName]: {
@@ -73,6 +45,7 @@ function modalReducer(state: ModalState, action: Action): ModalState {
                 }
             }
         case "HIDE_MODAL" :
+            console.log(state.calenderModal.modalVisibility);
             return {
                 ...state,
                 [action.payload.modalName]: {
@@ -108,6 +81,7 @@ type ModalContextProviderProps = {
 
 export default function ModalContextProvider({children}: ModalContextProviderProps) {
     const [modalState, modalDispatch] = useReducer(modalReducer, INITIAL_MODAL_STATE_OBJECT);
+    const calenderButtonRef = useRef<HTMLButtonElement>(null);
 
     const showCalenderModal = () => {
         modalDispatch({
@@ -156,6 +130,7 @@ export default function ModalContextProvider({children}: ModalContextProviderPro
             modalContent: modalState.calenderModal.modalContent,
             toggleModalContent: toggleCalenderModalContent,
         },
+        calenderButtonRef: calenderButtonRef,
         createTaskModal: {
             modalVisibility: modalState.createTaskModal.modalVisibility,
             showModal:showCreateTaskModal,

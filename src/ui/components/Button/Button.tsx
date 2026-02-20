@@ -11,11 +11,19 @@ type ButtonProps = {
     children?: string;
     onClick?: () => void;
     variant?: ButtonVariant;
+    color?: string;
     btnDimensions?: dimensions;
 }
 
-export default function Button({ icon, onClick, variant, btnDimensions, children }: ButtonProps) {
-    return <button className={variant} onClick={onClick} style={{width: btnDimensions?.width+'em', height: btnDimensions?.height+ 'em'}}>
+export default function Button({ icon, onClick, variant, btnDimensions, color, children }: ButtonProps) {
+    return <button 
+        className={variant} 
+        onClick={onClick} 
+        style={{
+            width: btnDimensions?.width+'em', 
+            height: btnDimensions?.height+ 'em'
+        }}
+    >
         {icon ?? children}
     </button>
 }

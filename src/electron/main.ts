@@ -6,7 +6,13 @@ import path from "path";
 type test = string;
 
 app.on("ready", () => {
-    const mainWindow = new BrowserWindow({});
+    const mainWindow = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            sandbox: true
+        }
+    });
     if(isDev()) {
         mainWindow.loadURL("http:localhost:5123");
     } else {
