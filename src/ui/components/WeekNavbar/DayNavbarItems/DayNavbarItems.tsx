@@ -5,7 +5,7 @@ type DayNavbarItemsProps = {
 };
 
 export default function DayNavbarItems({ dayName, dayNumber, selected }: DayNavbarItemsProps) {
-    return <div className={`dayNavbarItem ${selected && "selected"}`}>
+    return <div className={`dayNavbarItem ${selected && "selectedDay"}`}>
         <div className="dayName">
             <p>{dayName ?? "Sun"}</p>
         </div>
