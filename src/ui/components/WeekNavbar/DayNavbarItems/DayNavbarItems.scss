@@ -20,6 +20,15 @@
     }
 }
 
+.selected {
+    background-color: #00AAFF !important;
+
+    .dayNumber {
+        background-color: white;
+        color: #00AAFF;
+    }
+}
+
 .dayNavbarItem:hover {
     background-color: #00AAFF;
     cursor: pointer;

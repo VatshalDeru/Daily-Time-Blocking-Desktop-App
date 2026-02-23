@@ -22,9 +22,6 @@ type Action = {
 function dateReducer(state: DateStateType, action: Action): DateStateType{
     switch(action.type) {
         case "UPDATE_DATE" : {
-            // console.log(action.payload.date)
-
-            
             return {
                 date: action.payload.date
             }
@@ -47,11 +44,17 @@ function dateReducer(state: DateStateType, action: Action): DateStateType{
                 date: newDate
             }
         }
-        // case "GET_WEEK" : {
-        //     const currDate = new Date(state.date);
+        case "GET_WEEK" : {
+            const currDate = new Date(state.date);
 
-        //     const daysToSubtract
-        // }
+            let daysToSubtract = currDate.getDate();
+            const weekArr = [];
+            for(let i = daysToSubtract; i > (daysToSubtract-7); i--) {
+                const weekDate = new Date(state.date.getFullYear(), state.date.getMonth(), state.date.getDate() - i);
+                weekArr.push(weekDate);
+            }
+            
+        }
         default: return state
     }
 }
