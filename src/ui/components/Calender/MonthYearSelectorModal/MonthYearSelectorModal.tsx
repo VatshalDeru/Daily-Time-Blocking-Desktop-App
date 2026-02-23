@@ -91,9 +91,16 @@ export default function MonthYearSelectorModal() {
     }, [date, yearsArr]);
 
     function handleSelectMonthYear() {
-        const newDate = new Date(currentSelectedYear.current, currentSelectedMonth.current, date.getDate());
-        // console.log(newDate);
-        
+        const year = currentSelectedYear.current;
+        const month = currentSelectedMonth.current;
+        const originalDay = date.getDate()
+        // console.log(originalDay, month,  year);
+
+        // catching overflow dates when switch frommonths with greater days to months with smaller amount of dates
+        const maxDays = new Date(year, month + 1, 0).getDate();
+        const safeDate = Math.min(originalDay, maxDays)
+
+        const newDate = new Date(year, month, safeDate);
         updateDate(newDate);
         calenderModal.toggleModalContent();
     };

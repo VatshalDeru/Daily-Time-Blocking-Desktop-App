@@ -21,11 +21,14 @@ type Action = {
 
 function dateReducer(state: DateStateType, action: Action): DateStateType{
     switch(action.type) {
-        case "UPDATE_DATE" :
-            console.log(action.payload.date)
+        case "UPDATE_DATE" : {
+            // console.log(action.payload.date)
+
+            
             return {
                 date: action.payload.date
             }
+        }
         case "INCREMENT_DATE" : {
             const newDate = new Date(state.date);
 
