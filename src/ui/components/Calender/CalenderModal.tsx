@@ -34,9 +34,7 @@ export default function CalenderModal() {
         }
     }, [])
 
-    return (
-        <div className="overlay" onClick={calenderModal.hideModal}>    
-            <div className="calenderModal" ref={modalRef} onClick={(e) => e.stopPropagation()}>
+    return <div className="calenderModal" ref={modalRef}>
             <div className="headerContainer">
                 <div className="date" onClick={calenderModal.toggleModalContent}>
                     <h3>{date.toLocaleString("en-GB",  { month: "long" })} <span>{date.getFullYear()}</span></h3>
@@ -59,5 +57,4 @@ export default function CalenderModal() {
                     <MonthYearSelectorModal/>
             }
         </div>
-    </div>)
 };

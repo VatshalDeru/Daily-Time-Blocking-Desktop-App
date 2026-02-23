@@ -1,14 +1,15 @@
-.overlay {
-    position: fixed;
-    inset: 0;
-    top: 6em;
-}
+// .overlay {
+//     position: fixed;
+//     inset: 0;
+//     top: 6em;
+// }
 
 .calenderModal {
     background-color: #2F2F2F;
     width: 25em;
-    height: 25em;
+    height: auto;
     padding: 1em;
+    padding-bottom: 2.5em;
     position: absolute;
     left: 2em;
     border-radius: 1em;

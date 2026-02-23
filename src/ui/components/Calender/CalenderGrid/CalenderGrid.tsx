@@ -20,12 +20,12 @@ export default function CalenderGrid() {
     function handleSelectDate(event: React.MouseEvent) {
         const numberDate = event.target.innerText;
         const newDate = new Date(dateState.getFullYear(), dateState.getMonth(), numberDate);
-        // console.log(newDate);
+        console.log(newDate);
         updateDate(newDate);
     }; 
 
     const datesJsxArr:React.ReactNode[] = [];
-    for(let i = 1; i <= numOfDaysInMonth(); i++) {
+    for(let i = 1; i <= numOfDaysInMonth(dateState.getMonth(), dateState.getFullYear()); i++) {
         if(i === 1) datesJsxArr.push(<div key={i} style={{ gridColumnStart: firstDayOfMonth + 1 }}><p>{i}</p></div>)
        else datesJsxArr.push(<div key={i} onClick={handleSelectDate} className={dateState.getDate() === i ? "selected": ''}><p>{i}</p></div>)
     }

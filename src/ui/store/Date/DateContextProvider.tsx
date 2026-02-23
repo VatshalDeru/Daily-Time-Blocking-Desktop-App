@@ -16,12 +16,13 @@ type Action = {
         date: Date;
     }
 } | {
-    type: "INCREMENT_DATE" | "DECREMENT_DATE";
+    type: "INCREMENT_DATE" | "DECREMENT_DATE" | "GET_WEEK";
 }
 
 function dateReducer(state: DateStateType, action: Action): DateStateType{
     switch(action.type) {
         case "UPDATE_DATE" :
+            console.log(action.payload.date)
             return {
                 date: action.payload.date
             }
@@ -43,6 +44,11 @@ function dateReducer(state: DateStateType, action: Action): DateStateType{
                 date: newDate
             }
         }
+        // case "GET_WEEK" : {
+        //     const currDate = new Date(state.date);
+
+        //     const daysToSubtract
+        // }
         default: return state
     }
 }
