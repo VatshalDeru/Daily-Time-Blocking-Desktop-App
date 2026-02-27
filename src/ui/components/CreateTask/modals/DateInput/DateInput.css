@@ -1,0 +1,44 @@
+.dateInputContainer {
+  position: absolute;
+  height: auto;
+  background-color: #171718;
+  width: 27em;
+  left: 3.5em;
+  border-radius: 1em;
+  border: 1px #5f5f62 solid;
+  overflow: hidden;
+  padding: 0.6em 2em 1.5em 2em;
+}
+.dateInputContainer .dateTopSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #171718;
+}
+.dateInputContainer input {
+  display: block;
+  margin: auto;
+  width: 17em;
+  height: 2.5em;
+  padding: 1em;
+  margin-block: 0.6em 1em;
+  font-size: 1.3rem;
+  font-weight: 500;
+  border-radius: 1em;
+  border: 1px #00AAFF solid;
+}
+.dateInputContainer .monthYearContainer {
+  display: flex;
+  align-content: center;
+}
+.dateInputContainer .monthYearContainer:hover {
+  cursor: pointer;
+}
+.dateInputContainer .monthYearContainer h4 span {
+  color: #00AAFF;
+}
+.dateInputContainer .monthYearContainer svg {
+  width: 1.5em;
+  height: 1.5em;
+}/*# sourceMappingURL=DateInput.css.map */

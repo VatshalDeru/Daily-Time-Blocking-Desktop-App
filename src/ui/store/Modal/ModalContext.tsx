@@ -1,6 +1,12 @@
-import { createContext, useReducer } from "react";
+import { createContext} from "react";
 
 export type modalContentType = 'calender-grid' | 'month-year-selector'
+
+type SingleModal = {
+    modalVisibility: boolean,
+    showModal: () => void,
+    hideModal: () => void,
+}
 
 export type ModalContextType = {
     calenderModal: {
@@ -10,11 +16,16 @@ export type ModalContextType = {
         modalContent: modalContentType,
         toggleModalContent: () => void
     },
-    calenderButtonRef: React.RefObject<HTMLDivElement | null>;
+    calenderButtonRef: React.RefObject<HTMLButtonElement | null> | null;
     createTaskModal: {
         modalVisibility: boolean,
         showModal: () => void,
         hideModal: () => void,
+        dateModal: SingleModal & {
+            modalContent: modalContentType
+            toggleModalContent: () => void
+        },
+        timeModal: SingleModal,
     }
 }
 
@@ -26,11 +37,23 @@ export const ModalContext = createContext<ModalContextType>({
         modalContent: 'calender-grid',
         toggleModalContent: () => {}
     },
-    calenderButtonRef: {current: null},
+    calenderButtonRef: null,
     createTaskModal: {
         modalVisibility: false,
         showModal: () => {},
         hideModal: () => {},
+        dateModal: {
+            modalVisibility: false,
+            showModal: () => {},
+            hideModal: () => {},
+            modalContent: 'calender-grid',
+            toggleModalContent: () => {},
+        },
+        timeModal: {
+            modalVisibility: false,
+            showModal: () => {},
+            hideModal: () => {},
+        },
     }
 });
 

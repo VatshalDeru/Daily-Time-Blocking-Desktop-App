@@ -11,7 +11,6 @@
   display: flex;
   flex-direction: column;
   z-index: 1;
-  display: none;
 }
 .createTaskContainer .topSection {
   background-color: #F88E86;
@@ -80,6 +79,12 @@
 }
 .createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection input:focus {
   outline: none;
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 .createTaskContainer .topSection .taskInfoContainer .taskInfo .inputSection button {
   width: 2em;

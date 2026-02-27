@@ -3,8 +3,12 @@ import Button from "../../Button/Button";
 import { DateContext } from "../../../store/Date/DateContext";
 import { ModalContext } from "../../../store/Modal/ModalContext";
 
-export default function MonthYearSelectorModal() {
-    const { date, updateDate } = useContext(DateContext);
+type MonthYearSelectorProps = {
+  date: Date;
+  dateUpdatingFn: (date: Date) => void,
+};
+
+export default function MonthYearSelectorModal({ date, dateUpdatingFn }: MonthYearSelectorProps) {
     const { calenderModal } = useContext(ModalContext);
 
     // console.log(date);
@@ -101,39 +105,41 @@ export default function MonthYearSelectorModal() {
         const safeDate = Math.min(originalDay, maxDays)
 
         const newDate = new Date(year, month, safeDate);
-        updateDate(newDate);
+        dateUpdatingFn(newDate);
         calenderModal.toggleModalContent();
     };
-
-    
     
     return <div className="monthYearSelectorModalContainer">
         <div className="selectorContainer">
-            <div className="monthSelectorOverlay"
-                ref={monthOverlayRef} 
-            ></div>
-            <div className="monthSelector"
-                ref={monthRef}
-                onScroll={checkSelectedItem}
-            >
-                <ul>
-                    {monthsArr.map(month => {
-                        return <li key={month}>{month}</li>
-                    })}
-                </ul>
+            <div className="monthSelectorColumn">
+                <div className="monthSelectorOverlay"
+                    ref={monthOverlayRef} 
+                ></div>
+                <div className="monthSelector"
+                    ref={monthRef}
+                    onScroll={checkSelectedItem}
+                >
+                    <ul>
+                        {monthsArr.map(month => {
+                            return <li key={month}>{month}</li>
+                        })}
+                    </ul>
+                </div>
             </div>
-            <div className="yearSelectorOverlay"
-                ref={yearOverlayRef}
-            ></div>
-            <div className="yearSelector"
-                ref={yearRef}
-                onScroll={checkSelectedItem}
-            >
-                <ul>
-                    {yearsArr.map(year => {
-                            return <li key={year}>{year}</li>
-                    })}   
-                </ul>      
+            <div className="yearSelectorColumn">
+                <div className="yearSelectorOverlay"
+                    ref={yearOverlayRef}
+                ></div>
+                <div className="yearSelector"
+                    ref={yearRef}
+                    onScroll={checkSelectedItem}
+                >
+                    <ul>
+                        {yearsArr.map(year => {
+                                return <li key={year}>{year}</li>
+                        })}   
+                    </ul>      
+                </div>
             </div>
         </div>
         <Button 

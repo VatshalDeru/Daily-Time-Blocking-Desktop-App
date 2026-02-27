@@ -1,0 +1,42 @@
+.calenderGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.calenderGrid .calenderDaysRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 1em;
+  gap: 6px;
+  text-align: center;
+  color: #666767;
+  font-weight: 600;
+}
+.calenderGrid .calenderDatesGrid {
+  display: grid;
+  margin-top: 1em;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 14px 0px;
+  text-align: center !important;
+}
+.calenderGrid .calenderDatesGrid div {
+  display: flex;
+  justify-self: center;
+  border: 1px solid #666767;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+}
+.calenderGrid .calenderDatesGrid div:hover {
+  cursor: pointer;
+  background-color: #fff;
+  color: #666767;
+}
+.calenderGrid .calenderDatesGrid div p {
+  text-align: center;
+  margin: auto;
+}
+.calenderGrid .calenderDatesGrid .selected {
+  background-color: #fff;
+  color: #666767;
+}/*# sourceMappingURL=CalenderGrid.css.map */

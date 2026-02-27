@@ -9,7 +9,7 @@ export default function CalenderModal() {
     const modalRef = useRef<HTMLDivElement>(null);
 
     const { calenderModal, calenderButtonRef } = useContext(ModalContext);
-    const { date } = useContext(DateContext);
+    const { date, updateDate } = useContext(DateContext);
 
     useEffect(() => {
         function handleEscape(e: KeyboardEvent) {
@@ -32,7 +32,7 @@ export default function CalenderModal() {
             document.removeEventListener("keydown", handleEscape);
             document.removeEventListener("mousedown", handleClickOut);
         }
-    }, [])
+    }, [calenderButtonRef, calenderModal])
 
     return <div className="calenderModal" ref={modalRef}>
             <div className="headerContainer">
@@ -52,9 +52,9 @@ export default function CalenderModal() {
             </div>
             {
                 calenderModal.modalContent === 'calender-grid' ?
-                    <CalenderGrid></CalenderGrid>
+                    <CalenderGrid date={date} dateUpdatingFn={updateDate}/>
                     :
-                    <MonthYearSelectorModal/>
+                    <MonthYearSelectorModal date={date} dateUpdatingFn={updateDate}/>
             }
         </div>
 };
