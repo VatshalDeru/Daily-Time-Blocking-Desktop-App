@@ -1,35 +1,44 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import Button from "../Button/Button";
 import { ModalContext } from "../../store/Modal/ModalContext";
 import DateInput from "./modals/DateInput/DateInput";
+import { DateContext } from "../../store/Date/DateContext";
+import IconModal from "./modals/IconModal/IconModal";
+import TimeModal from "./modals/TimeModal/TimeModal";
+import useClickOutside from "../../hooks/useClickOutside";
 
 export default function CreateTask() {
-  const { createTaskModal } = useContext(ModalContext);
+  const { createTaskModal, iconModal, timeModal, taskDateModal } = useContext(ModalContext);
+  const { date } = useContext(DateContext)
+  const createTaskRef = useRef<HTMLDivElement>(null)
+
+  const [currTask, setCurrTask] = useState({
+    icon: null,
+    colour: '#F88E86',
+    name: '',
+    date: date,
+    time: new Date().getTime(),
+    isCompleted: false,
+  });
+  // console.log(currTask)
+
+  // function 
+
+  useEffect(() => {
+      document.body.style.overflow = "hidden";
+
+      return () => {
+          document.body.style.overflow = "auto";
+      };
+  }, []);
+
+  useClickOutside({ref:createTaskRef, closeHandler: createTaskModal.hideModal})
 
   return (
-    <div className="createTaskContainer">
-      <div className="topSection">
+    <div className="createTaskContainer" ref={createTaskRef}>
+      <div className="topSection" style={{backgroundColor: currTask.colour}}>
         <div className="buttonContainer">
           <Button
-            variant="options"
-            icon={
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14.0531 9.97188H13.6281C13.5937 9.9625 13.5625 9.94688 13.5281 9.94063C12.6343 9.80313 11.9281 9.05938 11.8687 8.18752C11.8 7.21252 12.3562 6.38752 13.2625 6.11877C13.3812 6.08439 13.5062 6.05939 13.6281 6.02814H14.0531C14.0812 6.03752 14.1062 6.05314 14.1374 6.05627C14.9624 6.19064 15.5906 6.78439 15.7687 7.59689C15.7812 7.65939 15.7999 7.72189 15.8156 7.78439V8.20939C15.8062 8.23752 15.7906 8.26564 15.7874 8.29377C15.6562 9.10627 15.0781 9.725 14.2749 9.91252C14.1968 9.93127 14.1249 9.95314 14.053 9.97189L14.0531 9.97188ZM2.04061 6.02813L2.46564 6.02814C2.50002 6.03752 2.53127 6.05314 2.56564 6.05627C3.46564 6.19689 4.16877 6.94377 4.22502 7.82502C4.28752 8.79689 3.72502 9.61877 2.81564 9.88439C2.7 9.91877 2.58127 9.94377 2.46563 9.97189H2.04063C2.0125 9.96252 1.9875 9.94689 1.95938 9.94064C1.14688 9.79064 0.615625 9.31877 0.3625 8.53127C0.328125 8.42814 0.309375 8.31877 0.28125 8.21252V7.78752C0.290625 7.75939 0.30625 7.73127 0.309375 7.70314C0.44375 6.88752 1.01875 6.27189 1.82187 6.08439C1.89688 6.06563 1.96875 6.04688 2.04061 6.02813ZM7.83437 6.02814H8.25938C8.29375 6.03752 8.325 6.05314 8.35938 6.05939C9.25625 6.20002 9.97812 6.97502 10.0156 7.85002C10.0594 8.83439 9.46562 9.66877 8.55 9.90314C8.45312 9.92814 8.35625 9.95002 8.25938 9.97189H7.83437C7.8 9.96252 7.76875 9.94689 7.73438 9.94064C6.8375 9.80314 6.11561 9.02502 6.075 8.15002C6.02812 7.16564 6.625 6.33127 7.54063 6.09689C7.64062 6.07189 7.7375 6.05002 7.83437 6.02814Z"
-                  fill="white"
-                />
-              </svg>
-            }
-            btnDimensions={{ width: 2.5, height: 2.5 }}
-          />
-          <Button
-            variant="close"
             icon={
               <svg
                 width="12"
@@ -44,6 +53,7 @@ export default function CreateTask() {
                 />
               </svg>
             }
+            backgroundColor="#5F5F5F"
             btnDimensions={{ width: 2.5, height: 2.5 }}
             onClick={createTaskModal.hideModal}
           />
@@ -63,6 +73,7 @@ export default function CreateTask() {
               />
             </svg>
             <Button
+              onClick={iconModal.showModal}
               icon={
                 <svg
                   className="editIconBtn"
@@ -71,21 +82,23 @@ export default function CreateTask() {
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  // style={{color: '#fff'}}
                 >
                   <path
                     d="M16.1111 10C15.6691 10 15.2452 9.82441 14.9326 9.51185C14.62 9.19928 14.4444 8.77536 14.4444 8.33333C14.4444 7.89131 14.62 7.46738 14.9326 7.15482C15.2452 6.84226 15.6691 6.66667 16.1111 6.66667C16.5531 6.66667 16.9771 6.84226 17.2896 7.15482C17.6022 7.46738 17.7778 7.89131 17.7778 8.33333C17.7778 8.77536 17.6022 9.19928 17.2896 9.51185C16.9771 9.82441 16.5531 10 16.1111 10ZM12.7778 5.55556C12.3358 5.55556 11.9118 5.37996 11.5993 5.0674C11.2867 4.75484 11.1111 4.33092 11.1111 3.88889C11.1111 3.44686 11.2867 3.02294 11.5993 2.71038C11.9118 2.39782 12.3358 2.22222 12.7778 2.22222C13.2198 2.22222 13.6437 2.39782 13.9563 2.71038C14.2689 3.02294 14.4444 3.44686 14.4444 3.88889C14.4444 4.33092 14.2689 4.75484 13.9563 5.0674C13.6437 5.37996 13.2198 5.55556 12.7778 5.55556ZM7.22222 5.55556C6.7802 5.55556 6.35627 5.37996 6.04371 5.0674C5.73115 4.75484 5.55556 4.33092 5.55556 3.88889C5.55556 3.44686 5.73115 3.02294 6.04371 2.71038C6.35627 2.39782 6.7802 2.22222 7.22222 2.22222C7.66425 2.22222 8.08817 2.39782 8.40073 2.71038C8.71329 3.02294 8.88889 3.44686 8.88889 3.88889C8.88889 4.33092 8.71329 4.75484 8.40073 5.0674C8.08817 5.37996 7.66425 5.55556 7.22222 5.55556ZM3.88889 10C3.44686 10 3.02294 9.82441 2.71038 9.51185C2.39782 9.19928 2.22222 8.77536 2.22222 8.33333C2.22222 7.89131 2.39782 7.46738 2.71038 7.15482C3.02294 6.84226 3.44686 6.66667 3.88889 6.66667C4.33092 6.66667 4.75484 6.84226 5.0674 7.15482C5.37996 7.46738 5.55556 7.89131 5.55556 8.33333C5.55556 8.77536 5.37996 9.19928 5.0674 9.51185C4.75484 9.82441 4.33092 10 3.88889 10ZM10 0C7.34784 0 4.8043 1.05357 2.92893 2.92893C1.05357 4.8043 0 7.34784 0 10C0 12.6522 1.05357 15.1957 2.92893 17.0711C4.8043 18.9464 7.34784 20 10 20C10.442 20 10.866 19.8244 11.1785 19.5118C11.4911 19.1993 11.6667 18.7754 11.6667 18.3333C11.6667 17.9 11.5 17.5111 11.2333 17.2222C10.9778 16.9222 10.8111 16.5333 10.8111 16.1111C10.8111 15.6691 10.9867 15.2452 11.2993 14.9326C11.6118 14.62 12.0358 14.4444 12.4778 14.4444H14.4444C15.9179 14.4444 17.3309 13.8591 18.3728 12.8173C19.4147 11.7754 20 10.3623 20 8.88889C20 3.97778 15.5222 0 10 0Z"
-                    fill="#D37973"
+                    fill={currTask.colour}
                   />
                 </svg>
               }
             />
+          {iconModal.modalVisibility && <IconModal  taskColour={currTask.colour} setCurrTask={setCurrTask}/>}
           </div>
           <div className="taskInfo">
             <div className="taskTime">
               <p>8:00AM 1 min</p>
             </div>
             <div className="inputSection">
-              <input type="text" placeholder="Task Name" />
+              <input type="text" placeholder="Task Name" onChange={(e) => setCurrTask(prev => ({ ...prev, name: e.target.value }))}/>
               <button></button>
             </div>
           </div>
@@ -95,7 +108,7 @@ export default function CreateTask() {
         <div className="taskTimeDateInputContainer">
           <div
             className="dayInputContainer"
-            onClick={createTaskModal.dateModal.showModal}
+            onClick={taskDateModal.showModal}
           >
             <svg
               width="24"
@@ -108,29 +121,30 @@ export default function CreateTask() {
                 fillRule="evenodd"
                 clipRule="evenodd"
                 d="M5.78125 0C6.08791 0 6.382 0.121819 6.59884 0.338658C6.81568 0.555497 6.9375 0.849593 6.9375 1.15625V2.3125H16.9583V1.15625C16.9583 0.849593 17.0802 0.555497 17.297 0.338658C17.5138 0.121819 17.8079 0 18.1146 0C18.4212 0 18.7153 0.121819 18.9322 0.338658C19.149 0.555497 19.2708 0.849593 19.2708 1.15625V2.32483C19.5052 2.331 19.7236 2.34231 19.926 2.35875C20.5119 2.405 21.0607 2.50983 21.5802 2.775C22.3781 3.18149 23.0268 3.83019 23.4333 4.62808C23.6985 5.14762 23.8033 5.69646 23.8496 6.28229C23.8958 6.845 23.8958 7.53104 23.8958 8.35583V20.165C23.8958 20.9898 23.8958 21.6758 23.8496 22.2385C23.8033 22.8244 23.6985 23.3732 23.4333 23.8927C23.0272 24.6904 22.3791 25.3391 21.5818 25.7458C21.0607 26.011 20.5119 26.1158 19.926 26.1621C19.3633 26.2083 18.6773 26.2083 17.854 26.2083H6.04333C5.21854 26.2083 4.5325 26.2083 3.96979 26.1621C3.38396 26.1158 2.83512 26.011 2.31558 25.7458C1.51816 25.3401 0.869516 24.6926 0.4625 23.8958C0.197334 23.3747 0.0925003 22.8259 0.0462503 22.2401C3.241e-07 21.6774 0 20.9913 0 20.1681V8.35583C0 7.53104 3.241e-07 6.845 0.0462503 6.28229C0.0925003 5.69646 0.197334 5.14762 0.4625 4.62808C0.868992 3.83019 1.51769 3.18149 2.31558 2.775C2.83512 2.50983 3.38396 2.405 3.96979 2.35875C4.17226 2.34231 4.39067 2.331 4.625 2.32483V1.15625C4.625 1.00441 4.65491 0.854055 4.71301 0.713772C4.77112 0.57349 4.85629 0.446025 4.96366 0.338658C5.07103 0.23129 5.19849 0.146121 5.33877 0.0880142C5.47906 0.0299072 5.62941 0 5.78125 0ZM21.5833 10.7917H2.3125V20.1187C2.3125 21.0006 2.3125 21.5941 2.35104 22.0489C2.3865 22.4929 2.45125 22.7041 2.52217 22.8429C2.70717 23.2067 3.00163 23.5012 3.36546 23.6862C3.50421 23.7571 3.71542 23.8218 4.15788 23.8573C4.61421 23.8943 5.20621 23.8958 6.08958 23.8958H17.8062C18.6881 23.8958 19.2816 23.8958 19.7364 23.8573C20.1804 23.8218 20.3916 23.7571 20.5304 23.6862C20.8936 23.5013 21.1888 23.2061 21.3737 22.8429C21.4446 22.7041 21.5093 22.4929 21.5448 22.0489C21.5818 21.5941 21.5833 21.0006 21.5833 20.1187V10.7917ZM9.63542 5.78125C9.32876 5.78125 9.03466 5.90307 8.81782 6.11991C8.60099 6.33675 8.47917 6.63084 8.47917 6.9375C8.47917 7.24416 8.60099 7.53825 8.81782 7.75509C9.03466 7.97193 9.32876 8.09375 9.63542 8.09375H14.2604C14.5671 8.09375 14.8612 7.97193 15.078 7.75509C15.2948 7.53825 15.4167 7.24416 15.4167 6.9375C15.4167 6.63084 15.2948 6.33675 15.078 6.11991C14.8612 5.90307 14.5671 5.78125 14.2604 5.78125H9.63542Z"
-                fill="#E28680"
+                fill={currTask.colour}
               />
             </svg>
             <p>Today, 12 Feb 2026</p>
           </div>
-          {createTaskModal.dateModal.modalVisibility && <DateInput></DateInput>}
-          <div className="timeInputContainer">
+          {taskDateModal.modalVisibility && <DateInput accentColours={currTask.colour}/>}
+          <div className="timeInputContainer" onClick={timeModal.showModal}>
             <svg
               width="25"
               height="25"
               viewBox="0 0 25 25"
-              fill="none"
+              fill="#fff"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 d="M12.0833 0C10.4965 0 8.92526 0.312545 7.45924 0.919789C5.99322 1.52703 4.66117 2.41709 3.53913 3.53913C1.27306 5.80519 0 8.87863 0 12.0833C0 15.288 1.27306 18.3615 3.53913 20.6275C4.66117 21.7496 5.99322 22.6396 7.45924 23.2469C8.92526 23.8541 10.4965 24.1667 12.0833 24.1667C15.288 24.1667 18.3615 22.8936 20.6275 20.6275C22.8936 18.3615 24.1667 15.288 24.1667 12.0833C24.1667 10.4965 23.8541 8.92526 23.2469 7.45924C22.6396 5.99322 21.7496 4.66117 20.6275 3.53913C19.5055 2.41709 18.1734 1.52703 16.7074 0.919789C15.2414 0.312545 13.6701 0 12.0833 0ZM17.1583 17.1583L10.875 13.2917V6.04167H12.6875V12.325L18.125 15.5875L17.1583 17.1583Z"
-                fill="#E28680"
+                fill={currTask.colour}
               />
             </svg>
             <p>08:00 Am - 08:01 AM</p>
           </div>
         </div>
-        <div className="subTasksNotesContainer">
+        {timeModal.modalVisibility && <TimeModal/>}
+        {/* <div className="subTasksNotesContainer">
           <div className="subtaskInput">
             <input type="text" placeholder="Add Subtask" />
           </div>
@@ -141,10 +155,9 @@ export default function CreateTask() {
               placeholder="Add notes, meeting links or phone numbers..."
             ></textarea>
           </div>
-        </div>
+        </div> */}
         <div className="modifyTaskButtons">
           <Button
-            variant="delete"
             icon={
               <svg
                 width="20"
@@ -155,13 +168,22 @@ export default function CreateTask() {
               >
                 <path
                   d="M19 4H15.5L14.5 3H9.5L8.5 4H5V6H19M6 19C6 19.5304 6.21071 20.0391 6.58579 20.4142C6.96086 20.7893 7.46957 21 8 21H16C16.5304 21 17.0391 20.7893 17.4142 20.4142C17.7893 20.0391 18 19.5304 18 19V7H6V19Z"
-                  fill="#838383"
+                  fill={currTask.colour}
                 />
               </svg>
             }
+            backgroundColor="#242424"
+            extraStyles={{border: "1px solid #858585"}}
             btnDimensions={{ width: 3, height: 3 }}
           />
-          <Button variant="update">Update Task</Button>
+          <Button 
+            backgroundColor={currTask.colour}
+            extraStyles={{
+              borderRadius: "2em",
+              paddingInline: "1em",
+              fontWeight: "bold"
+            }}
+          >{createTaskModal.isCreating ? 'Create Task' : 'Update'}</Button>
         </div>
       </div>
     </div>

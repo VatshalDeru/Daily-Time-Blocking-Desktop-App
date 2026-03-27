@@ -1,0 +1,34 @@
+.timeModalContainer {
+    position: absolute;
+    margin-top: 8.5em;
+    background-color: #1C1C1E;
+    width: 20em;
+    padding: 0.8em 1.2em;
+    border-radius: 1em;
+    border: 1px solid #45474D;
+    
+    header {
+        padding: unset;
+        height: auto;
+        font-size: 0.7rem;
+    }
+
+    .timeWindowContainer {
+        // border: 1px solid red;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1em;
+    }
+
+    .durationContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1em;
+        
+        h2 {
+            font-size: 1rem;
+        }
+    }
+}

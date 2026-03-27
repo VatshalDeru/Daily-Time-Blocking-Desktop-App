@@ -7,6 +7,7 @@ export default function WeekNavbar() {
 
     const currDate = new Date(date);
 
+    // creating the array for the days in the week navbar
     const daysToSubtract = currDate.getDay();
     const weekArr = [];
     for(let i = daysToSubtract; i > (daysToSubtract-7); i--) {
@@ -14,7 +15,6 @@ export default function WeekNavbar() {
         weekArr.push(weekDate);
     }
     
-
     return <div className="weekNavbarContainer">
         {
             weekArr.map(((day, index) => {

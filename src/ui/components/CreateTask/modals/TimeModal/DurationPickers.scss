@@ -1,0 +1,61 @@
+.durationPickers {
+    display: flex;
+    gap: 1em;
+
+
+    .wrapper {
+        position: relative;
+        .picker {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border: 1px solid #45474D;
+            border-radius: 1.4em;
+            width: 3.5em;
+            height: fit-content;
+            padding: 0.4em;
+            font-size: 1rem;
+    
+            svg {
+                width: 0.5em;
+                aspect-ratio: 1/1;
+            }
+        }
+        
+        .pickerList {
+            position: absolute;
+            bottom: 100%;
+            height: 16em;
+            margin-bottom: 0.2em;
+            overflow: scroll;
+            scrollbar-width: none;
+            width: 3.5em;
+            background-color: #1c1c1e;
+            border: 1px solid #45474D;
+            border-radius: 1em;
+            // padding-inline: 1em;
+
+
+            li {
+                width: 2.5em;
+                margin: 0.5em auto;
+                list-style: none;
+                text-align: center;
+                padding-block: 0.2em;
+                border-radius: 0.5em;
+
+
+                &:hover {
+                    background-color: grey;
+                }
+
+                &.selected {
+                    background-color: rgb(49, 48, 48);
+                    color: #287ed4;
+                }
+            }
+        }
+    }
+
+    
+}

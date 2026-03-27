@@ -6,6 +6,7 @@
     align-items: center;
 
     .selectorContainer {
+        // border: 1px solid red;
         height: 14em;
         display: flex;
         justify-content: space-evenly;
@@ -13,6 +14,7 @@
         gap: 4em;
 
         ul {
+            // border: 1px solid red;
             list-style: none;
             // padding-top: calc(7em / 2 - 2.5em / 2);
             // padding-bottom: calc(7em / 2 - 2.5em / 2);
@@ -36,8 +38,10 @@
         }
 
         .monthSelectorColumn {
+            padding-block: 1em !important;
+            // border: 1px solid red;
             position: relative;
-            height: 7em;
+            height: 8em;
             width: 7em;
         }
 
@@ -49,6 +53,7 @@
 
         .monthSelectorOverlay,
         .yearSelectorOverlay {
+            // border: 1px solid red;
             position: absolute;
             top: 50%;
             left: 0;
@@ -62,6 +67,8 @@
 
         .monthSelector,
         .yearSelector {
+            // border: 1px solid red;
+            // padding-block: 1em;
             position: absolute;
             inset: 0;
             overflow-y: scroll;
@@ -72,10 +79,12 @@
 
         .monthSelector {
             font-size: 1.2rem;
+            padding-block: 3em;
         }
 
         .yearSelector {
             font-size: 1.4rem;
+            padding-block: 1em;
         }
     }
 

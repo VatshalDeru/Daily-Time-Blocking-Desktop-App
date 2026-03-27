@@ -11,7 +11,13 @@ import './components/Calender/CalenderModal.scss'
 import './components/Calender/CalenderGrid/CalenderGrid.scss'
 import './components/Calender/MonthYearSelectorModal/MonthYearSelectorModal.scss'
 import './components/CreateTask/CreateTask.scss'
+import './components/CreateTask/modals/IconModal/IconModal.scss'
 import './components/CreateTask/modals/DateInput/DateInput.scss'
+import './components/CreateTask/modals/TimeModal/TimeModal.scss'
+import './components/CreateTask/modals/TimeModal/TimePicker.scss'
+import './components/CreateTask/modals/TimeModal/DurationPickers.scss'
+import './components/CreateTask/modals/TimeModal/DurationPresets.scss'
+
 import App from './App.tsx'
 import ModalContextProvider from './store/Modal/ModalContextProvider.tsx';
 import DateContextProvider from './store/Date/DateContextProvider.tsx';

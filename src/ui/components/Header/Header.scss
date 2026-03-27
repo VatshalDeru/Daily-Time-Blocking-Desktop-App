@@ -3,11 +3,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // top: 0;
-    // left: 0;
     width: 100%;
     height:6em;
-    padding: 1.2em 2em; /* use padding instead of margin */
+    padding: 1.2em 2em;
     box-sizing: border-box;
     
     .dateControlsContainer {
@@ -43,7 +41,7 @@ header {
         }
 
         .changeDateButtons {
-            margin-top: 0.3em;
+            display: flex;
 
             .prevDayButton {
                 margin-right: 1em;

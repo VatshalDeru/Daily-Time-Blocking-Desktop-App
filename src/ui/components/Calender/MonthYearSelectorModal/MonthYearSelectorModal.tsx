@@ -143,9 +143,14 @@ export default function MonthYearSelectorModal({ date, dateUpdatingFn }: MonthYe
             </div>
         </div>
         <Button 
-            variant="update" 
+            // variant="update" 
             onClick={handleSelectMonthYear}
-            color="#05AAFF"
+            backgroundColor="#05AAFF"
+            extraStyles={{
+                borderRadius: "2em",
+                fontWeight: "bold",
+                padding: "1.2em 1.2em"
+            }}
             btnDimensions={{
                 width: 6,
                 height: 2

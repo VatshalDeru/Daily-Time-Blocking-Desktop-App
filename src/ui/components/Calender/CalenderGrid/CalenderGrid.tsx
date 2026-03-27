@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { numOfDaysInMonth } from "../../../utils/calender";
-import { DateContext } from "../../../store/Date/DateContext";
+// import { useContext } from "react";
+// import { numOfDaysInMonth } from "../../../utils/calender";
+// import { DateContext } from "../../../store/Date/DateContext";
 
 type CalenderGridProps = {
   date: Date;
@@ -11,8 +11,8 @@ export default function CalenderGrid({ date, dateUpdatingFn }: CalenderGridProps
   const firstDayOfMonth = new Date(2026, date.getMonth()).getDay();
   // console.log(firstDayOfMonth)
 
-  function handleSelectDate(event: React.MouseEvent) {
-    const numberDate = event.target.innerText;
+  function handleSelectDate(numberDate: number) {
+    // const numberDate = event.target.innerText;
     const newDate = new Date(
       date.getFullYear(),
       date.getMonth(),
@@ -20,6 +20,11 @@ export default function CalenderGrid({ date, dateUpdatingFn }: CalenderGridProps
     );
     console.log(newDate);
     dateUpdatingFn(newDate);
+  }
+
+  function numOfDaysInMonth(monthIndex: number = new Date().getMonth(), year:number = new Date().getFullYear()): number{
+    // const date = new Date(`${monthName} 1, ${year}`);
+    return new Date(year, monthIndex + 1, 0).getDate();
   }
 
   const datesJsxArr: React.ReactNode[] = [];
@@ -34,7 +39,7 @@ export default function CalenderGrid({ date, dateUpdatingFn }: CalenderGridProps
           key={i}
           className={date.getDate() === i ? "selected" : ""}
           style={{ gridColumnStart: firstDayOfMonth + 1 }}
-          onClick={handleSelectDate}
+          onClick={() => handleSelectDate(i)}
         >
           <p>{i}</p>
         </div>,
@@ -43,7 +48,7 @@ export default function CalenderGrid({ date, dateUpdatingFn }: CalenderGridProps
       datesJsxArr.push(
         <div
           key={i}
-          onClick={handleSelectDate}
+          onClick={()=> handleSelectDate(i)}
           className={date.getDate() === i ? "selected" : ""}
         >
           <p>{i}</p>
