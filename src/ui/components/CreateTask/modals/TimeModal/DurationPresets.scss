@@ -1,0 +1,25 @@
+.durationPresetsContainer {
+    .presets{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1em 0.5em;
+        margin-top: 1em;
+
+        button {
+            border: 1px solid #515152;
+            border-radius: 1.5em;
+            padding: 0.5em 1em;
+            font-size: 0.9rem;
+            font-weight: 500;
+
+            &:hover {
+                background-color: #2E2e30;
+            }
+
+            &.selected {
+                border: 1px solid #00AAFF;
+                color: #00AAFF;
+            }
+        }
+    }
+}

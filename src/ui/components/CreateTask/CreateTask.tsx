@@ -143,7 +143,7 @@ export default function CreateTask() {
             <p>08:00 Am - 08:01 AM</p>
           </div>
         </div>
-        {timeModal.modalVisibility && <TimeModal/>}
+        {timeModal.modalVisibility && <TimeModal accentColour={currTask.colour}/>}
         {/* <div className="subTasksNotesContainer">
           <div className="subtaskInput">
             <input type="text" placeholder="Add Subtask" />

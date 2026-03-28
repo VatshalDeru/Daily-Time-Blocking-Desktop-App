@@ -9,11 +9,15 @@ type Duration = {
 type DurationPickersProps = {
   duration: Duration;
   setDuration: React.Dispatch<React.SetStateAction<Duration>>;
+  setPresetDurationNull: () => void;
+  setActiveDuration: React.Dispatch<React.SetStateAction<'custom-duration' | 'preset-duration'>>;
 };
 
 export default function DurationPickers({
   duration,
   setDuration,
+  setPresetDurationNull,
+  setActiveDuration
 }: DurationPickersProps) {
   const [listVisiblility, setIsListVisible] = useState({
     hours: false,
@@ -41,6 +45,8 @@ export default function DurationPickers({
       ...prevListVisibilty,
       [durationType]: false,
     }));
+    setPresetDurationNull();
+    setActiveDuration("custom-duration");
   };
 
   // const handleClickOut
@@ -53,7 +59,7 @@ export default function DurationPickers({
   };
 
   const closeBothListHandler = () => {
-    setIsListVisible(prevListVisibility => ({
+    setIsListVisible(() => ({
         hours: false,
         mins: false,
     }))
