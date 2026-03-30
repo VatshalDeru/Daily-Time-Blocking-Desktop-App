@@ -21,12 +21,15 @@ import './components/CreateTask/modals/TimeModal/DurationPresets.scss'
 import App from './App.tsx'
 import ModalContextProvider from './store/Modal/ModalContextProvider.tsx';
 import DateContextProvider from './store/Date/DateContextProvider.tsx';
+import TaskContextProvider from './store/Task/TaskContextProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <DateContextProvider>
       <ModalContextProvider>
-        <App />
+        <TaskContextProvider>
+          <App />
+        </TaskContextProvider>
       </ModalContextProvider>   
     </DateContextProvider>
   </StrictMode>

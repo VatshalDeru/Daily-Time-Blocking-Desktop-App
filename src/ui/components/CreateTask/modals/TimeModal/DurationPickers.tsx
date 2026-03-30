@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import useClickOutside from "../../../../hooks/useClickOutside";
+import { TaskContext } from "../../../../store/Task/TaskContext";
 
 type Duration = {
   hours: number;
@@ -19,6 +20,7 @@ export default function DurationPickers({
   setPresetDurationNull,
   setActiveDuration
 }: DurationPickersProps) {
+  const { currTask } = useContext(TaskContext);
   const [listVisiblility, setIsListVisible] = useState({
     hours: false,
     mins: false,
@@ -26,13 +28,12 @@ export default function DurationPickers({
   const durationPickerRef = useRef<HTMLDivElement>(null)
 
 //   console.log(duration);
-  const hourArray = Array.from({ length: 24 }, (_, i) => i + 1);
-  const minArray = Array.from({ length: 59 }, (_, i) => i + 1);
+  const hourArray = Array.from({ length: 25 }, (_, i) => i);
+  const minArray = Array.from({ length: 60 }, (_, i) => i);
   // console.log(hourArray, minArray)
 
   const handlePickDuration = (
-    e: React.MouseEvent,
-    durationType: string,
+    durationType: "hours" | "mins",
     selectedDuration: number,
   ) => {
     setDuration((prevDuration) => {
@@ -41,10 +42,24 @@ export default function DurationPickers({
         [durationType]: selectedDuration,
       };
     });
+    
+    // converting the selected durations to ms
+    const durationInMs = durationType === "hours" ? 
+      selectedDuration * 60 * 60 * 1000 + (duration.mins * 60 * 1000) : 
+      selectedDuration * 60 * 1000 + (duration.hours * 60 * 60 * 1000);
+    
+    console.log(selectedDuration, durationType)
+
+    currTask.setTimeWindow({
+      ...currTask.timeWindow,
+      endTime: new Date(currTask.timeWindow.startTime.getTime() + durationInMs),
+    });
+
     setIsListVisible((prevListVisibilty) => ({
       ...prevListVisibilty,
       [durationType]: false,
     }));
+
     setPresetDurationNull();
     setActiveDuration("custom-duration");
   };
@@ -76,7 +91,7 @@ export default function DurationPickers({
               {hourArray.map((hourNum, index) => (
                 <li
                   key={index}
-                  onClick={(e) => handlePickDuration(e, "hours", hourNum)}
+                  onClick={() => handlePickDuration("hours", hourNum)}
                   className={hourNum === duration.hours ? "selected" : ""}
                 >
                   {hourNum}
@@ -111,7 +126,7 @@ export default function DurationPickers({
               {minArray.map((minNum, index) => (
                 <li
                   key={index}
-                  onClick={(e) => handlePickDuration(e, "mins", minNum)}
+                  onClick={() => handlePickDuration("mins", minNum)}
                   className={minNum === duration.mins ? "selected" : ""}
                 >
                   {minNum}

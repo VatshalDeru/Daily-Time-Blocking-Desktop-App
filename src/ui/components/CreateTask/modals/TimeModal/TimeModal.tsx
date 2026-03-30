@@ -1,20 +1,27 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useState, useRef, useContext } from "react";
 import useClickOutside from "../../../../hooks/useClickOutside";
 
-import TimePicker from "./TimePicker";
 import Button from "../../../Button/Button";
 import DurationPickers from "./DurationPickers";
 import DurationPresets from "./DurationPresets";
+import DurationWindow from "./DurationWindow";
 import { ModalContext } from "../../../../store/Modal/ModalContext";
+
+// import type { CurrTask, TimeWindow } from "../../CreateTask";
+import { TaskContext } from "../../../../store/Task/TaskContext";
 
 type ActiveDuration = 'custom-duration' | 'preset-duration';
 
-type TimeModalProps = {
-    accentColour: string,    
-}
+// type TimeModalProps = {
+//     accentColour: string, 
+//     taskTimeWindow:  TimeWindow,
+//     currTask: CurrTask,
+//     setCurrTask: React.Dispatch<React.SetStateAction<CurrTask>>
+// };
 
-export default function TimeModal({ accentColour }: TimeModalProps) {
+export default function TimeModal() {
     const { timeModal } = useContext(ModalContext);
+    const { currTask } = useContext(TaskContext);
 
     // holds the value for a custom duration that the user has selected for a task
     const [duration, setDuration] = useState({hours: 0, mins: 0});
@@ -24,29 +31,46 @@ export default function TimeModal({ accentColour }: TimeModalProps) {
     const [activeDuration, setActiveDuration] = useState<ActiveDuration>('preset-duration')
     const timeModalRef = useRef<HTMLDivElement>(null);
 
-    const currTime = new Date();
-    const endTime = new Date(currTime);
+    // determining which duration should be in effect for the duration window and task
+    // useEffect(() => {
+    //     let endTime;
+    //     if(activeDuration === 'custom-duration') {
+    //         setCurrTask(prevTask => {
+    //             const newTask = {...prevTask}
+    //             endTime = taskTimeWindow.endTime;
+    //             endTime.setMinutes(endTime.getMinutes() + (duration.hours * 60) + duration.mins);
+    //             return newTask;
+    //         })
+    //         // currTask.time[1].setMinutes(e.getMinutes() + (duration.hours * 60) + duration.mins);
+    //     } else if(activeDuration === 'preset-duration' && selectedDurationPreset) {
+    //         setCurrTask(prevTask => {
+    //             const newTask = {...prevTask}
+    //             endTime = taskTimeWindow.endTime;
+    //             endTime.setMinutes(endTime.getMinutes() + selectedDurationPreset)
+    //             return {
+    //                 ...prevTask,
+    //                 timeWindow: {
+    //                     startTime: newTask.timeWindow.startTime,
+    //                     endTime,
+    //                 }
+    //             };
+    //         })
+    //     };
+    // }, [duration, selectedDurationPreset, activeDuration, setCurrTask]);
 
-    if(activeDuration === 'custom-duration') {
-        endTime.setMinutes(endTime.getMinutes() + (duration.hours * 60) + duration.mins);
-    } else if(activeDuration === 'preset-duration' && selectedDurationPreset) {
-        endTime.setMinutes(endTime.getMinutes() + selectedDurationPreset)
-    };
-    
     const setCustomDurationDefault = () => {
         setDuration(() => ({
             hours: 1,
             mins: 0,
-        }))
+        }));
     };
 
     const setPresetDurationNull = () => {
         setSelectedDurationPreset(null);
-    }
+    };
 
     useClickOutside({ref: timeModalRef, closeHandler: timeModal.hideModal})
     
-    // console
     return <div className="timeModalContainer" ref={timeModalRef}>
         <header>
             <h2>Time</h2>
@@ -59,14 +83,10 @@ export default function TimeModal({ accentColour }: TimeModalProps) {
                 backgroundColor="#515152"
             />
         </header>
-        <div className="timeWindowContainer">
-            <TimePicker time={currTime}/>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 12H20.5" stroke="#515152" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M14 19L21 12L14 5" stroke="#515152" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <TimePicker time={endTime}/>
-        </div>
+        <DurationWindow
+            startTime={currTask.timeWindow.startTime}
+            endTime={currTask.timeWindow.endTime}
+        />
         <div className="durationContainer">
             <h2>Duration</h2>
             <DurationPickers 
@@ -81,7 +101,7 @@ export default function TimeModal({ accentColour }: TimeModalProps) {
             setSelectedDurationPreset = {setSelectedDurationPreset} 
             setCustomDurationDefault={setCustomDurationDefault}
             setActiveDuration={setActiveDuration}
-            accentColour={accentColour}
+            accentColour={currTask.colour}
         />
     </div>
 };

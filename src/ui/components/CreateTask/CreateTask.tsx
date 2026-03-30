@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Button from "../Button/Button";
 import { ModalContext } from "../../store/Modal/ModalContext";
 import DateInput from "./modals/DateInput/DateInput";
@@ -6,23 +6,34 @@ import { DateContext } from "../../store/Date/DateContext";
 import IconModal from "./modals/IconModal/IconModal";
 import TimeModal from "./modals/TimeModal/TimeModal";
 import useClickOutside from "../../hooks/useClickOutside";
+import { TaskContext } from "../../store/Task/TaskContext";
+import { formatDate, formatTime } from "../../utils/util";
+
+export type TimeWindow = {
+  startTime: Date,
+  endTime: Date,
+}
+
 
 export default function CreateTask() {
   const { createTaskModal, iconModal, timeModal, taskDateModal } = useContext(ModalContext);
+  const { currTask} = useContext(TaskContext);
   const { date } = useContext(DateContext)
   const createTaskRef = useRef<HTMLDivElement>(null)
 
-  const [currTask, setCurrTask] = useState({
-    icon: null,
-    colour: '#F88E86',
-    name: '',
-    date: date,
-    time: new Date().getTime(),
-    isCompleted: false,
-  });
-  // console.log(currTask)
-
-  // function 
+  const startTime = formatTime(currTask.timeWindow.startTime);
+  const endTime = formatTime(currTask.timeWindow.endTime);
+  // const [currTask, setCurrTask] = useState<CurrTask>({
+  //   icon: null,
+  //   colour: '#F88E86',
+  //   name: '',
+  //   date: date,
+  //   timeWindow: {
+  //     startTime: new Date(),
+  //     endTime: new Date(),
+  //   },
+  //   isCompleted: false,
+  // });
 
   useEffect(() => {
       document.body.style.overflow = "hidden";
@@ -30,10 +41,11 @@ export default function CreateTask() {
       return () => {
           document.body.style.overflow = "auto";
       };
-  }, []);
+  }, [date]);
 
   useClickOutside({ref:createTaskRef, closeHandler: createTaskModal.hideModal})
 
+  
   return (
     <div className="createTaskContainer" ref={createTaskRef}>
       <div className="topSection" style={{backgroundColor: currTask.colour}}>
@@ -124,7 +136,7 @@ export default function CreateTask() {
                 fill={currTask.colour}
               />
             </svg>
-            <p>Today, 12 Feb 2026</p>
+            <p>{formatDate(date)}</p>
           </div>
           {taskDateModal.modalVisibility && <DateInput accentColours={currTask.colour}/>}
           <div className="timeInputContainer" onClick={timeModal.showModal}>
@@ -140,10 +152,10 @@ export default function CreateTask() {
                 fill={currTask.colour}
               />
             </svg>
-            <p>08:00 Am - 08:01 AM</p>
+            <p>{`${startTime.hours}:${startTime.minutes} ${startTime.period}`} - {`${endTime.hours}:${endTime.minutes} ${endTime.period}`}</p>
           </div>
         </div>
-        {timeModal.modalVisibility && <TimeModal accentColour={currTask.colour}/>}
+        {timeModal.modalVisibility && <TimeModal/>}
         {/* <div className="subTasksNotesContainer">
           <div className="subtaskInput">
             <input type="text" placeholder="Add Subtask" />
@@ -175,7 +187,7 @@ export default function CreateTask() {
             backgroundColor="#242424"
             extraStyles={{border: "1px solid #858585"}}
             btnDimensions={{ width: 3, height: 3 }}
-          />
+          ></Button>
           <Button 
             backgroundColor={currTask.colour}
             extraStyles={{

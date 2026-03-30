@@ -27,7 +27,7 @@ function App() {
       <Button 
         btnDimensions={{width: 4, height: 4}}
         extraStyles={{
-          position: "absolute",
+          position: "fixed",
           bottom: 0,
           right: 0,
           margin: "3em"

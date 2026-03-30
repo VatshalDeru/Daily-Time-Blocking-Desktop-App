@@ -1,20 +1,17 @@
+import { formatTime } from "../../../../utils/util";
+
 type TimePickerProps = {
     time: Date,
     period?: "AM" | "PM"
 };
 
-export default function TimePicker({ time, period }: TimePickerProps) {
-    let hours = time.getHours()
-    if(!period) {
-        period = hours < 12 ? "AM" : "PM";
-    }
-    hours = hours % 12;
-    hours = hours === 0 ? 12 : hours;   
+export default function TimePicker({ time }: TimePickerProps) {
+    const { hours, minutes, period } = formatTime(time);
     
     return <div className="timePicker">
-        <span>{String(hours).padStart(2, "0")}</span>
+        <span>{hours}</span>
         <span>:</span>
-        <span>{String(time.getMinutes()).padStart(2, "0")}</span>
+        <span>{minutes}</span>
         <span> {period}</span>
     </div>
 };

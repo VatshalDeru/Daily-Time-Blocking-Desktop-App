@@ -8,7 +8,7 @@ type ModalName = "calenderModal" | "createTaskModal" | "taskDateModal" |"iconMod
 // type TaskModalName = "dateModal" | "timeModal";
 
 type Action =
-  | { type: "SHOW_MODAL"; payload: { modalName: ModalName } }
+    { type: "SHOW_MODAL"; payload: { modalName: ModalName } }
   | { type: "HIDE_MODAL"; payload: { modalName: ModalName } }
   | { type: "TOGGLE_CALENDER_MODAL_CONTENT" }
   | { type: "TOGGLE_TASK_DATE_MODAL_CONTENT" }
@@ -351,6 +351,7 @@ export default function ModalContextProvider({
       hideModal: hideTimeModal,
     }
   };
+  
   return (
     <ModalContext.Provider value={modalCtxValue}>
       {children}
