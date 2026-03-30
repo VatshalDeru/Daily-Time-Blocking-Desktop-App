@@ -69,7 +69,7 @@ function modalReducer(state: ModalStateType, action: Action): ModalStateType {
         },
       };
     case "HIDE_MODAL":
-      console.log(state.calenderModal.modalVisibility);
+      // console.log(state.calenderModal.modalVisibility);
       return {
         ...state,
         [action.payload.modalName]: {

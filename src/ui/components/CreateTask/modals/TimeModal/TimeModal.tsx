@@ -10,15 +10,6 @@ import { ModalContext } from "../../../../store/Modal/ModalContext";
 // import type { CurrTask, TimeWindow } from "../../CreateTask";
 import { TaskContext } from "../../../../store/Task/TaskContext";
 
-type ActiveDuration = 'custom-duration' | 'preset-duration';
-
-// type TimeModalProps = {
-//     accentColour: string, 
-//     taskTimeWindow:  TimeWindow,
-//     currTask: CurrTask,
-//     setCurrTask: React.Dispatch<React.SetStateAction<CurrTask>>
-// };
-
 export default function TimeModal() {
     const { timeModal } = useContext(ModalContext);
     const { currTask } = useContext(TaskContext);
@@ -28,7 +19,6 @@ export default function TimeModal() {
     // holds the value for a selected preset duration the user has selected for a task
     const [selectedDurationPreset, setSelectedDurationPreset] = useState<number | null>(1);
     // determines which duration is in effect for the task (either a custom duration or a preset)
-    const [activeDuration, setActiveDuration] = useState<ActiveDuration>('preset-duration')
     const timeModalRef = useRef<HTMLDivElement>(null);
 
     // determining which duration should be in effect for the duration window and task
@@ -93,14 +83,12 @@ export default function TimeModal() {
                 duration={duration} 
                 setDuration={setDuration} 
                 setPresetDurationNull={setPresetDurationNull}
-                setActiveDuration={setActiveDuration}
             />
         </div>
         <DurationPresets 
             selectedDurationPreset={selectedDurationPreset} 
             setSelectedDurationPreset = {setSelectedDurationPreset} 
             setCustomDurationDefault={setCustomDurationDefault}
-            setActiveDuration={setActiveDuration}
             accentColour={currTask.colour}
         />
     </div>

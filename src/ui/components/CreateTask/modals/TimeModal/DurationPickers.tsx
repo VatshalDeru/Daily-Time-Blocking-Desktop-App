@@ -11,14 +11,12 @@ type DurationPickersProps = {
   duration: Duration;
   setDuration: React.Dispatch<React.SetStateAction<Duration>>;
   setPresetDurationNull: () => void;
-  setActiveDuration: React.Dispatch<React.SetStateAction<'custom-duration' | 'preset-duration'>>;
 };
 
 export default function DurationPickers({
   duration,
   setDuration,
   setPresetDurationNull,
-  setActiveDuration
 }: DurationPickersProps) {
   const { currTask } = useContext(TaskContext);
   const [listVisiblility, setIsListVisible] = useState({
@@ -61,7 +59,6 @@ export default function DurationPickers({
     }));
 
     setPresetDurationNull();
-    setActiveDuration("custom-duration");
   };
 
   // const handleClickOut

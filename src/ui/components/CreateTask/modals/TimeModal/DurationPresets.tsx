@@ -5,9 +5,6 @@ type DurationPresetsProps = {
   selectedDurationPreset: number | null;
   setSelectedDurationPreset: React.Dispatch<React.SetStateAction<number | null>>;
   setCustomDurationDefault: () => void;
-  setActiveDuration: React.Dispatch<
-  React.SetStateAction<"custom-duration" | "preset-duration">
-  >;
   accentColour: string;
 };
 
@@ -17,7 +14,6 @@ export default function DurationPresets({
   selectedDurationPreset,
   setSelectedDurationPreset,
   setCustomDurationDefault,
-  setActiveDuration,
   accentColour,
 }: DurationPresetsProps) {
   // const [selectedDurationPreset, setSlectedDurationPreset] = useState(1);
@@ -41,7 +37,6 @@ export default function DurationPresets({
     })
     setSelectedDurationPreset(preset);
     setCustomDurationDefault();
-    setActiveDuration("preset-duration");
   };
 
   return (
