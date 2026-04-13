@@ -11,6 +11,15 @@
         padding: unset;
         height: auto;
         font-size: 0.7rem;
+
+        button,svg {
+            color: #858585;
+            width: 1.5em;
+
+            &:hover {
+                color: white;
+            }
+        }
     }
 
     .timeWindowContainer {

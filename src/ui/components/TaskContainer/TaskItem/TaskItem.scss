@@ -18,13 +18,18 @@
 
         .taskIconContainer {
             display: flex;
-            width: 3em;
-            height: 3em;
+            width: 4em;
+            height: 6em;
             justify-content: center;
             align-items: center;
-            border-radius: 50%;
+            border-radius: 2em;
             background-color: #5E5E62;
-            border: 1px #888888 solid;
+            // border: 1px #888888 solid;
+
+            svg {
+                width: 1.5em;
+                height: 1.5em;
+            }
         }
         .titleTimeContainer {
             line-height: 1.4em;

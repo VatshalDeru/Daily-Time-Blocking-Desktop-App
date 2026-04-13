@@ -12,6 +12,7 @@ export const testConnection = async () => {
     try {
         await client.connect();
         console.log("Connected To DB");
+        // await client.query("SELECT ")
         await client.end();
     } catch (error) {
         console.log("Connection to DB failed", error);

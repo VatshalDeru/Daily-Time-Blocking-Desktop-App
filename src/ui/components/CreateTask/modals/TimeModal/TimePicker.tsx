@@ -1,31 +1,56 @@
 import { useContext, useEffect, useRef, useState } from "react";
 
-import { formatTime } from "../../../../utils/util";
+import { formatTime, getHoursAndPeriod } from "../../../../utils/util";
 import { TaskContext } from "../../../../store/Task/TaskContext";
 // import { removeAllListeners } from "process";
 
 type TimePickerProps = {
-    time: Date,
-    period?: "AM" | "PM"
+    time: Date;
+    pickerType: "startTime" | "endTime";
 };
 
 type SelectedField = "hours" | "mins" | "period" | null;
 
-export default function TimePicker({ time }: TimePickerProps) {
+export default function TimePicker({ time, pickerType }: TimePickerProps) {
     const { hours, minutes, period } = formatTime(time);
     const { currTask } = useContext(TaskContext);
     const [selectedField, setSelectedField] = useState<SelectedField>(null);
     const timePickerRef = useRef<HTMLDivElement | null>(null);
     
-    // const selectedHandleField = (field) => {
-    //     set
-    // }
+    const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProps['pickerType'], change: 1 | -1) => {
+        const newTime = new Date(currTask.timeWindow[pickerType]);
+
+        if(field === "hours") newTime.setHours(newTime.getHours() + change)
+        else if (field === "mins") newTime.setMinutes(newTime.getMinutes() + change);
+        currTask.setTimeWindow({
+            ...currTask.timeWindow,
+            [pickerType]: newTime,
+        })
+    }
+
+    const togglePeriod = (pickerType: TimePickerProps["pickerType"]) => {
+        const newTime = new Date(currTask.timeWindow[pickerType]);
+        const { period: currPeriod } = getHoursAndPeriod(newTime);
+        if(currPeriod ===  "AM") {
+            newTime.setHours(newTime.getHours() + 12);
+        } else {
+            newTime.setHours(newTime.getHours() - 12);
+        }
+
+        currTask.setTimeWindow({
+            ...currTask.timeWindow,
+            [pickerType]: newTime
+        });
+    };
 
     useEffect(() => {
         // console.log("running")
+        const timePicker = timePickerRef.current;
+        if(!timePicker) return;
 
         const handleKeyToChangeField = (e: KeyboardEvent) => {
-            console.log('pressed')
+
+            // console.log('pressed')
             if(selectedField) {
                 if(e.key === 'ArrowLeft') {
                     switch(selectedField) {
@@ -57,24 +82,47 @@ export default function TimePicker({ time }: TimePickerProps) {
                 }
             }
         }
-
-        timePickerRef.current?.addEventListener('keydown', handleKeyToChangeField);
+        timePicker.addEventListener('keydown', handleKeyToChangeField);
         
-        const handleClickOut = (e: MouseEvent) => {
-            if(timePickerRef.current && !timePickerRef.current.contains(e.target as Node)){
-                setSelectedField(null);
-                // console.log('click outside')
+        // you need todetermine which time picker this is e.g. startTime or endTime
+        // YOU ALSO NEED TO CHANGE THE TASKCONTEXT SO THAT THE DATE PROPERTY OF THE TASK STATE DOESNT POINT TO THE DATE CONTEXT
+        const handleKeyToUpdateFieldValue = (e: KeyboardEvent) => {
+            console.log("up pressed")
+            if(e.key === "ArrowUp") {
+                if(selectedField === "hours") {
+                    updateDurationField("hours", pickerType, 1)
+                } else if(selectedField === 'mins') {
+                    updateDurationField("mins", pickerType, 1)
+                } else if (selectedField === "period") {
+                    togglePeriod(pickerType)
+                };
+                // } else if(selectedField === '')
+            } else if(e.key === "ArrowDown") {
+                if(selectedField === "hours") {
+                    updateDurationField("hours", pickerType, -1)
+                } else if(selectedField === "mins"){
+                    updateDurationField("mins", pickerType, -1)
+                } else if (selectedField === "period") {
+                    togglePeriod(pickerType);
+                };
             }
         }
 
-
+        timePicker.addEventListener('keydown', handleKeyToUpdateFieldValue)
+;
+        const handleClickOut = (e: MouseEvent) => {
+            if(timePickerRef.current && !timePickerRef.current.contains(e.target as Node)){
+                setSelectedField(null);
+            }
+        }
         document.addEventListener('click', handleClickOut)
 
         return () => {
             document.removeEventListener('click', handleClickOut);
-            timePickerRef.current?.removeEventListener('keydown', handleKeyToChangeField);
+            timePicker.removeEventListener('keydown', handleKeyToChangeField);
+            timePicker.removeEventListener('keydown', handleKeyToUpdateFieldValue);
         }
-    }, [selectedField])
+    }, [selectedField, currTask, pickerType, period])
 
     // const handleClickOutOfTimePicker = () => {
 

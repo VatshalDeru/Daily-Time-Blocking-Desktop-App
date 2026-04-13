@@ -2,12 +2,15 @@
 // import { numOfDaysInMonth } from "../../../utils/calender";
 // import { DateContext } from "../../../store/Date/DateContext";
 
+import type { CalenderModal } from "../../../store/Modal/ModalContext";
+
 type CalenderGridProps = {
   date: Date;
   dateUpdatingFn: (date: Date) => void,
+  parentModal: CalenderModal
 };
 
-export default function CalenderGrid({ date, dateUpdatingFn }: CalenderGridProps) {
+export default function CalenderGrid({ date, dateUpdatingFn, parentModal }: CalenderGridProps) {
   const firstDayOfMonth = new Date(2026, date.getMonth()).getDay();
   // console.log(firstDayOfMonth)
 
@@ -20,6 +23,7 @@ export default function CalenderGrid({ date, dateUpdatingFn }: CalenderGridProps
     );
     console.log(newDate);
     dateUpdatingFn(newDate);
+    parentModal.hideModal();
   }
 
   function numOfDaysInMonth(monthIndex: number = new Date().getMonth(), year:number = new Date().getFullYear()): number{

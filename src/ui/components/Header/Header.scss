@@ -46,6 +46,10 @@ header {
             .prevDayButton {
                 margin-right: 1em;
             }
+
+            .nextDayButton {
+                    transform: rotate(180deg);
+            }
         }
     }
 

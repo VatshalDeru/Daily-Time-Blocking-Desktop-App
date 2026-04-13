@@ -10,21 +10,20 @@ type SingleModal = {
 
 export type TaskModalActions = "create" | "update";
 
-export type ModalContextType = {
-    calenderModal: SingleModal & {
+export type CalenderModal = SingleModal & {
         modalContent: modalContentType,
         toggleModalContent: () => void
-    },
+    };
+
+export type ModalContextType = {
+    calenderModal: CalenderModal,
     calenderButtonRef: React.RefObject<HTMLButtonElement | null> | null;
     createTaskModal: SingleModal & {
         isCreating: boolean,
         setIsCreating: (action: TaskModalActions) => void,
         // timeModal: SingleModal,
     },
-    taskDateModal: SingleModal & {
-        modalContent: modalContentType
-        toggleModalContent: () => void
-    },
+    taskDateModal: CalenderModal,
     iconModal: SingleModal,
     timeModal: SingleModal
 }

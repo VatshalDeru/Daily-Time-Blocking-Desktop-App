@@ -10,7 +10,6 @@
 
     .header {
         display: flex;
-        // width: 10em;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
@@ -21,6 +20,14 @@
             margin: auto 0;
             button{
                 position: unset !important;
+                border: 1px rgb(255, 255, 255) solid !important;
+                
+                svg {
+                    width: 1.2em;
+                    height: 1.2em;
+                    // width: 1.2em !important;
+                    position: absolute;
+                }
             }
         }
     }
@@ -59,7 +66,11 @@
                 // margin: auto;
                 display: flex;
                 list-style: none;
-                
+
+                &.selected {
+                    color: white;
+                }   
+
                 svg {
                     width: auto !important;
                     // aspect-ratio: 1/1;
@@ -95,14 +106,21 @@
                 aspect-ratio: 1/1;
                 border-radius: 50%;
                 
-                &:hover {
+                &:hover, &.selected{
                     color: white;
                     border: 1px white solid;
+                    cursor: pointer;
                 }
+
+
 
                 
                 svg{
                     width: auto !important;
+
+                    // &.selected {
+                    //     color: white;
+                    // }
                 }
             }
         }

@@ -1,15 +1,16 @@
-import { useContext, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Button from "../../Button/Button";
-import { DateContext } from "../../../store/Date/DateContext";
-import { ModalContext } from "../../../store/Modal/ModalContext";
+// import { DateContext } from "../../../store/Date/DateContext";
+import { type CalenderModal } from "../../../store/Modal/ModalContext";
 
 type MonthYearSelectorProps = {
   date: Date;
-  dateUpdatingFn: (date: Date) => void,
+  dateUpdatingFn: (date: Date) => void;
+  parentModal: CalenderModal;
 };
 
-export default function MonthYearSelectorModal({ date, dateUpdatingFn }: MonthYearSelectorProps) {
-    const { calenderModal } = useContext(ModalContext);
+export default function MonthYearSelectorModal({ date, dateUpdatingFn, parentModal }: MonthYearSelectorProps) {
+    // const { calenderModal } = useContext(ModalContext);
 
     // console.log(date);
     const monthsArr: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -106,7 +107,7 @@ export default function MonthYearSelectorModal({ date, dateUpdatingFn }: MonthYe
 
         const newDate = new Date(year, month, safeDate);
         dateUpdatingFn(newDate);
-        calenderModal.toggleModalContent();
+        parentModal.toggleModalContent();
     };
     
     return <div className="monthYearSelectorModalContainer">

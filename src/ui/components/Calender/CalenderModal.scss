@@ -30,6 +30,15 @@
             gap: 0.5em;
             font-size: 1.5rem;
 
+            .rightArrowIcon {
+                // border: 1px red solid;
+                height: 40px;
+                transform: rotate(180deg);
+                svg {
+                    color:#00AAFF;
+                }
+            }
+
             span {
                 color: #00AAFF;
             }

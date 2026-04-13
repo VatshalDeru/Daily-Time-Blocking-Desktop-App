@@ -60,7 +60,7 @@ const INITIAL_MODAL_STATE_OBJECT: ModalStateType = {
 function modalReducer(state: ModalStateType, action: Action): ModalStateType {
   switch (action.type) {
     case "SHOW_MODAL":
-      console.log(state.calenderModal.modalVisibility);
+      // console.log(state.calenderModal.modalVisibility);
       return {
         ...state,
         [action.payload.modalName]: {
@@ -77,28 +77,6 @@ function modalReducer(state: ModalStateType, action: Action): ModalStateType {
           modalVisibility: false,
         },
       };
-    // case "SHOW_TASK_MODAL":
-    //   return {
-    //     ...state,
-    //     createTaskModal: {
-    //       ...state.createTaskModal,
-    //       [action.payload.modalName]: {
-    //         ...state.createTaskModal[action.payload.modalName],
-    //         modalVisibility: true,
-    //       },
-    //     },
-    //   };
-    // case "HIDE_TASK_MODAL":
-    //   return {
-    //     ...state,
-    //     createTaskModal: {
-    //       ...state.createTaskModal,
-    //       [action.payload.modalName]: {
-    //         ...state.createTaskModal[action.payload.modalName],
-    //         modalVisibility: false,
-    //       },
-    //     },
-    //   };
     case "TOGGLE_CALENDER_MODAL_CONTENT": {
       let newModalContent: modalContentType = state.calenderModal.modalContent;
 
@@ -224,24 +202,6 @@ export default function ModalContextProvider({
       },
     });
   };
-  
-  // const showTaskTimeModal = () => {
-  //   modalDispatch({
-  //     type: "SHOW_TASK_MODAL",
-  //     payload: {
-  //       modalName: "timeModal",
-  //     },
-  //   });
-  // };
-
-  // const hideTaskTimeModal = () => {
-  //   modalDispatch({
-  //     type: "HIDE_TASK_MODAL",
-  //     payload: {
-  //       modalName: "timeModal",
-  //     },
-  //   });
-  // };
 
   const showIconModal = () => {
     modalDispatch({
@@ -288,16 +248,6 @@ export default function ModalContextProvider({
       type: "TOGGLE_TASK_DATE_MODAL_CONTENT",
     });
   };
-  
-  // const createTaskModalActive = () => {
-
-  // };
-
-  // const updateTaskModalActive = () => {
-  //   modalDispatch({
-  //     type: "UPDATE_TASK_MODAL_ACTIVE"
-  //   })
-  // };
 
   const setIsCreating = (action: TaskModalActions) => {
     if(action === "create") {
@@ -326,12 +276,6 @@ export default function ModalContextProvider({
       showModal: showCreateTaskModal,
       hideModal: hideCreateTaskModal,
       setIsCreating,
-
-      // timeModal: {
-      //   modalVisibility: modalState.createTaskModal.timeModal.modalVisibility,
-      //   showModal: showTaskTimeModal,
-      //   hideModal: hideTaskTimeModal,
-      // },
     },
     taskDateModal: {
       modalVisibility: modalState.taskDateModal.modalVisibility,

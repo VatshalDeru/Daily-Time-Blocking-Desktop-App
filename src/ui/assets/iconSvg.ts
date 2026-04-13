@@ -1,7 +1,18 @@
 // import { Icon } from "@iconify/react";
 // import { Activity } from "react";
 
-export const iconCategories = {
+export type IconCategoryNames =
+    'Activities' |
+    'Animal'|
+    'Bathroom'|
+    'Clothes'|
+    'Digital & Apps'|
+    'Food & Drinks'|
+    'Health';
+
+
+
+export const iconCategories: Record<IconCategoryNames, string[]> = {
     'Activities': [
         'boxicons:rugby-ball-filled',
         'ri:baseball-fill',
@@ -13,7 +24,17 @@ export const iconCategories = {
         'ph-basketball-fill',
         'ion:bicycle',
         'temaki:gym',
+        "mdi:fire",
+        "icon-park-solid:hockey"
     ],
+    "Animal": [
+        
+    ],
+    "Bathroom": [],
+    "Clothes": [],
+    "Digital & Apps": [],
+    "Food & Drinks": [],
+    "Health": [],
 };
 
 export const iconCategoryIcons = [

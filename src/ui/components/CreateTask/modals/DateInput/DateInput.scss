@@ -16,6 +16,11 @@
         justify-content: space-between;
         // padding: 1em;
         background-color: #171718;
+
+        button, svg {
+            width: 2em;
+            height: 2em;
+        }
     }
 
     input {
@@ -46,6 +51,7 @@
         svg {
             width: 1.5em;
             height: 1.5em;
+            transform: rotate(180deg);
         }
     }
 

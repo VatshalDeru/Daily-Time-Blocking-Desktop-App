@@ -6,7 +6,7 @@ export type TimeWindow = {
 }
 
 export type CurrTask = {
-  icon: string | null,
+  icon: string,
   colour: string,
   name: string,
   date: Date | null,
@@ -27,7 +27,7 @@ export type TaskContextType = {
 
 export const TaskContext = createContext<TaskContextType>({
     currTask: {
-        icon: null,
+        icon: "solar:sun-bold",
         colour: '#F88E86',
         name: '',
         date: null,
