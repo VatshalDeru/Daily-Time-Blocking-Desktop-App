@@ -49,10 +49,12 @@ export default function DurationPickers({
     
     console.log(selectedDuration, durationType)
 
-    currTask.setTimeWindow({
-      ...currTask.timeWindow,
-      endTime: new Date(currTask.timeWindow.startTime.getTime() + durationInMs),
-    });
+
+    currTask.setDuration(durationInMs)
+    // currTask.setTimeWindow({
+    //   ...currTask.timeWindow,
+    //   endTime: new Date(currTask.timeWindow.startTime.getTime() + durationInMs),
+    // });
 
     setIsListVisible((prevListVisibilty) => ({
       ...prevListVisibilty,

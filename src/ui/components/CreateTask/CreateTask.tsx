@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useRef } from "react";
 import Button from "../Button/Button";
+import { useState } from "react";
 import { ModalContext } from "../../store/Modal/ModalContext";
 import DateInput from "./modals/DateInput/DateInput";
 // import { DateContext } from "../../store/Date/DateContext";
@@ -38,12 +39,13 @@ export default function CreateTask() {
   // need to pad minutes with 0,
   // this formats the time window that will be displayed at the top of the modal and also in the time input area
   const timeWindow = useMemo(() => {
-    const formattedStartTime = getDisplayTime(currTask.timeWindow.startTime);
-    const formattedEndTime = getDisplayTime(currTask.timeWindow.endTime);
+    const taskEndTime = new Date(currTask.date.getTime() + currTask.duration);
+    const formattedStartTime = getDisplayTime(currTask.date);
+    const formattedEndTime = getDisplayTime(taskEndTime);
 
     const DAY_MS = 24*60*60*1000;
 
-    let timeWindowDuration = currTask.timeWindow.endTime.getTime() - currTask.timeWindow.startTime.getTime();
+    let timeWindowDuration = taskEndTime.getTime() - currTask.date.getTime();
     // ensures the time window stays wrapped in the range of 0 <= timeWindow < 24hrs
     timeWindowDuration = ((timeWindowDuration%DAY_MS) + DAY_MS) % DAY_MS;
 
@@ -87,9 +89,10 @@ export default function CreateTask() {
       icon: currTask.icon,
       colour: currTask.colour,
       date: currTask.date,
+      duration: currTask.duration,
       isCompleted: currTask.isCompleted,
       name: currTask.name,
-      timeWindow: currTask.timeWindow
+      // timeWindow: currTask.timeWindow
     };
     console.log(submittedTask);
   }

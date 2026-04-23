@@ -1,16 +1,11 @@
 import { createContext } from "react";
 
-export type TimeWindow = {
-  startTime: Date,
-  endTime: Date,
-}
-
 export type CurrTask = {
   icon: string,
   colour: string,
   name: string,
-  date: Date | null,
-  timeWindow: TimeWindow,
+  date: Date,
+  duration: number,
   isCompleted: boolean,
 };
 
@@ -20,7 +15,7 @@ export type TaskContextType = {
       setColour: (colour: string) => void,
       setName: (name: string) => void,
       setDate: (date: Date) => void,
-      setTimeWindow: (timeWindow: TimeWindow) => void,
+      setDuration: (duration: number) => void,
       setIsCompleted: (isCompleted: boolean) => void,
     },
 }
@@ -30,17 +25,14 @@ export const TaskContext = createContext<TaskContextType>({
         icon: "solar:sun-bold",
         colour: '#F88E86',
         name: '',
-        date: null,
-        timeWindow: {
-          startTime: new Date(),
-          endTime: new Date(),
-        },
+        date: new Date,
+        duration: 15*60*1000,
         isCompleted: false,
         setIcon: () => {},
         setColour: () => {},
         setName: () => {},
         setDate: () => {},
-        setTimeWindow: () => {},
+        setDuration: () => {},
         setIsCompleted: () => {},
     },
 });

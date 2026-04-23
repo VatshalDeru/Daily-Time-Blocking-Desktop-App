@@ -5,11 +5,12 @@ import LongArrowIcon from "../../../icons/LongArrowIcon";
 
 export default function DurationWindow() {
     const { currTask } = useContext(TaskContext);
+    // console.log(currTask.duration)
     return  (
     <div className="timeWindowContainer">
-        <TimePicker time={currTask.timeWindow.startTime} pickerType="startTime"/>
+        <TimePicker time={currTask.date as Date} pickerType="startTime"/>
         <LongArrowIcon/>
-        <TimePicker time={currTask.timeWindow.endTime} pickerType="endTime"/>
+        <TimePicker time={new Date(currTask.date.getTime() + (currTask.duration as number))} pickerType="endTime"/>
     </div>
     )
 }

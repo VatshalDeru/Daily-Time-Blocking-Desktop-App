@@ -17,30 +17,51 @@ export default function TimePicker({ time, pickerType }: TimePickerProps) {
     const [selectedField, setSelectedField] = useState<SelectedField>(null);
     const timePickerRef = useRef<HTMLDivElement | null>(null);
     
-    const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProps['pickerType'], change: 1 | -1) => {
-        const newTime = new Date(currTask.timeWindow[pickerType]);
+const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProps['pickerType'], change: 1 | -1) => {
+    if(!currTask.date) return;
 
-        if(field === "hours") newTime.setHours(newTime.getHours() + change)
+    if(pickerType === 'startTime') {
+        // Only update hours/minutes, keep the date part
+        const newDate = new Date(currTask.date);
+        if(field === "hours") newDate.setHours(newDate.getHours() + change);
+        else if (field === "mins") newDate.setMinutes(newDate.getMinutes() + change);
+        currTask.setDate(newDate);
+    } else if(pickerType === 'endTime') {
+        // Compute current end time, adjust it, then update duration in ms
+        const currentEndTime = new Date(currTask.date.getTime() + currTask.duration);
+        const newTime = new Date(currentEndTime);
+        if(field === "hours") newTime.setHours(newTime.getHours() + change);
         else if (field === "mins") newTime.setMinutes(newTime.getMinutes() + change);
-        currTask.setTimeWindow({
-            ...currTask.timeWindow,
-            [pickerType]: newTime,
-        })
+        const newDurationMs = newTime.getTime() - currTask.date.getTime();
+        currTask.setDuration(newDurationMs);
     }
+};
 
     const togglePeriod = (pickerType: TimePickerProps["pickerType"]) => {
-        const newTime = new Date(currTask.timeWindow[pickerType]);
-        const { period: currPeriod } = getHoursAndPeriod(newTime);
-        if(currPeriod ===  "AM") {
-            newTime.setHours(newTime.getHours() + 12);
-        } else {
-            newTime.setHours(newTime.getHours() - 12);
-        }
+        if(!currTask.date) return;
 
-        currTask.setTimeWindow({
-            ...currTask.timeWindow,
-            [pickerType]: newTime
-        });
+        if(pickerType === 'startTime') {
+            const newTime = new Date(currTask.date);
+            const { period: currPeriod } = getHoursAndPeriod(newTime);
+            if(currPeriod === "AM") {
+                newTime.setHours(newTime.getHours() + 12);
+            } else {
+                newTime.setHours(newTime.getHours() - 12);
+            }
+            currTask.setDate(newTime);
+        } else if(pickerType === 'endTime') {
+            const currentEndTime = new Date(currTask.date.getTime() + currTask.duration * 60000);
+            const newTime = new Date(currentEndTime);
+            const { period: currPeriod } = getHoursAndPeriod(newTime);
+            if(currPeriod === "AM") {
+                newTime.setHours(newTime.getHours() + 12);
+            } else {
+                newTime.setHours(newTime.getHours() - 12);
+            }
+            const newDurationMs = newTime.getTime() - currTask.date.getTime();
+            const newDurationMinutes = Math.round(newDurationMs / 60000);
+            currTask.setDuration(newDurationMinutes);
+        }
     };
 
     useEffect(() => {
@@ -48,8 +69,8 @@ export default function TimePicker({ time, pickerType }: TimePickerProps) {
         const timePicker = timePickerRef.current;
         if(!timePicker) return;
 
+        // function to listen for key inputs to change which field in the picker is active
         const handleKeyToChangeField = (e: KeyboardEvent) => {
-
             // console.log('pressed')
             if(selectedField) {
                 if(e.key === 'ArrowLeft') {
@@ -84,8 +105,7 @@ export default function TimePicker({ time, pickerType }: TimePickerProps) {
         }
         timePicker.addEventListener('keydown', handleKeyToChangeField);
         
-        // you need todetermine which time picker this is e.g. startTime or endTime
-        // YOU ALSO NEED TO CHANGE THE TASKCONTEXT SO THAT THE DATE PROPERTY OF THE TASK STATE DOESNT POINT TO THE DATE CONTEXT
+        // function to change values of the picker fields
         const handleKeyToUpdateFieldValue = (e: KeyboardEvent) => {
             console.log("up pressed")
             if(e.key === "ArrowUp") {
@@ -125,8 +145,6 @@ export default function TimePicker({ time, pickerType }: TimePickerProps) {
     }, [selectedField, currTask, pickerType, period])
 
     // const handleClickOutOfTimePicker = () => {
-
-    // };
 
     const handleClickField = (field: SelectedField) => {
         setSelectedField(field);

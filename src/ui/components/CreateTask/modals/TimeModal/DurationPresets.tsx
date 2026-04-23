@@ -31,13 +31,16 @@ export default function DurationPresets({
 
   // console.log(currTask)
   const handleSelectDurationPreset = (preset: number) => {
-    currTask.setTimeWindow({
-      ...currTask.timeWindow,
-      endTime: new Date(currTask.timeWindow.startTime.getTime() + (preset * 60 * 1000))
-    })
+    console.log(preset*60*1000)
+    currTask.setDuration(preset * 60 * 1000);
+    // currTask.setTimeWindow({
+    //   ...currTask.timeWindow,
+    //   endTime: new Date(currTask.timeWindow.startTime.getTime() + (preset * 60 * 1000))
+    // })
     setSelectedDurationPreset(preset);
     setCustomDurationDefault();
   };
+  // console.log(currTask.duration/(1000*60))
 
   return (
     <div className="durationPresetsContainer">
@@ -49,7 +52,7 @@ export default function DurationPresets({
           <button
             key={index}
             style={
-              selectedDurationPreset === durationPreset
+                (currTask.duration/(1000*60)) === durationPreset
                 ? {
                     border: `1px solid ${accentColour}`,
                     color: accentColour,

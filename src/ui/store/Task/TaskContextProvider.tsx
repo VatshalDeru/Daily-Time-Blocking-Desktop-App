@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { TaskContext, type CurrTask, type TimeWindow, type TaskContextType} from "./TaskContext"
+import { TaskContext, type CurrTask, type TaskContextType} from "./TaskContext"
 
 type TaskStateType = { currTask: CurrTask };
 
@@ -9,10 +9,7 @@ const INITIAL_TASK_STATE_OBJECT = {
         colour: '#F88E86',
         name: '',
         date: new Date,
-        timeWindow: {
-            startTime: new Date(),
-            endTime: new Date(),
-        },
+        duration: 15*60*1000,
         isCompleted: false,
     }
 };
@@ -21,7 +18,7 @@ type Action = {type: "SET_ICON", payload: { icon: string }}
     | { type: "SET_COLOUR", payload: { colour: string }}
     | { type: "SET_NAME", payload: { name: string }}
     | { type: "SET_DATE", payload: { date: Date }}
-    | { type: "SET_TIME_WINDOW", payload: { timeWindow: TimeWindow }}
+    | { type: "SET_DURATION", payload: {duration: number }}
     | { type: "SET_IS_COMPLETED", payload: { isCompleted: boolean }};
 
 const taskReducer = (state: TaskStateType, action: Action): TaskStateType => {
@@ -48,48 +45,20 @@ const taskReducer = (state: TaskStateType, action: Action): TaskStateType => {
                 }
             }
         case "SET_DATE" : {
-            const newStartTime = new Date(state.currTask.timeWindow.startTime);
-            newStartTime.setFullYear(action.payload.date.getFullYear());
-            newStartTime.setMonth(action.payload.date.getMonth());
-            newStartTime.setDate(action.payload.date.getDate());
-
-            const newEndTime = new Date(state.currTask.timeWindow.endTime);
-            newEndTime.setFullYear(action.payload.date.getFullYear());
-            newEndTime.setMonth(action.payload.date.getMonth());
-            newEndTime.setDate(action.payload.date.getDate());
-
             return {
                 currTask: {
                     ...state.currTask,
                     date: action.payload.date,
-                    timeWindow: {
-                        startTime: newStartTime,
-                        endTime: newEndTime,
-                    }
                 }
             }
         }
-        case "SET_TIME_WINDOW": {
-            const newStartTime = new Date(state.currTask.date as Date);
-            newStartTime.setHours(action.payload.timeWindow.startTime.getHours());
-            newStartTime.setMinutes(action.payload.timeWindow.startTime.getMinutes());
-
-            const newEndTime = new Date(state.currTask.date as Date);
-            newEndTime.setHours(action.payload.timeWindow.endTime.getHours());
-            newEndTime.setMinutes(action.payload.timeWindow.endTime.getMinutes());
-            
-
-
+        case "SET_DURATION" : 
             return {
                 currTask: {
                     ...state.currTask,
-                    timeWindow: {
-                        startTime: newStartTime,
-                        endTime: newEndTime
-                    }
+                    duration: action.payload.duration
                 }
             }
-        }
         case "SET_IS_COMPLETED" :
             return {
                 currTask: {
@@ -136,6 +105,13 @@ export default function TaskContextProvider({ children }: TaskContextProviderPro
         })
     };
 
+    const setDuration = (duration: number) => {
+        taskDispatch({
+            type: "SET_DURATION",
+            payload: { duration }
+        })
+    }
+
     const setTimeWindow = (timeWindow: TimeWindow) => {
         // console.log("setting time window...")
         taskDispatch({
@@ -158,7 +134,8 @@ export default function TaskContextProvider({ children }: TaskContextProviderPro
             setColour,
             setName,
             setDate,
-            setTimeWindow,
+            setDuration,
+            // setTimeWindow,
             setIsCompleted,
         },
 

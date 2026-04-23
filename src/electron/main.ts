@@ -1,14 +1,17 @@
 import { app, BrowserWindow } from 'electron';
-import { testConnection } from './database.js';
+import { testConnection, fetchUserData} from './database.js';
 import { isDev } from './util.js';
 import path from "path";
+import { getPreloadPath } from './pathResolver.js';
+import { error } from 'console';
 
 app.on("ready", () => {
     const mainWindow = new BrowserWindow({
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            sandbox: true
+            sandbox: true,
+            preload: getPreloadPath()
         }
     });
     if(isDev()) {
@@ -16,5 +19,7 @@ app.on("ready", () => {
     } else {
         mainWindow.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
     };
-    testConnection();
+    testConnection()
+        .then(fetchUserData)
+        .catch(err => console.error(err));
 });
