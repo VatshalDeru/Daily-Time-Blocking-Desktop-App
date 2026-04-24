@@ -8,23 +8,40 @@ import CreateTask from './components/CreateTask/CreateTask'
 import CalenderModal from './components/Calender/CalenderModal'
 import { useContext } from 'react'
 import { ModalContext } from './store/Modal/ModalContext'
+import { TaskContext } from './store/Task/TaskContext'
+import { DateContext } from './store/Date/DateContext'
+import CreateTaskIcon from './components/icons/CreateTaskIcon'
 
 
 function App() {
-  // const [count, setCount] = useState(0)
-  // const [calenderVisibility, setCalenderVisibilty]
-  const { calenderModal } = useContext(ModalContext)
+  const { calenderModal, createTaskModal } = useContext(ModalContext)
+  const { currTask } = useContext(TaskContext);
+  const { date, updateDate } = useContext(DateContext);
+
+  const handelOpenCreateTaskModal = () => {
+    currTask.setDate(date);
+    createTaskModal.setIsCreating('create');
+    createTaskModal.showModal();
+  };
+  
   return (
     <div className='appContainer'>
       <Header/>
-      {calenderModal.modalVisibility && <CalenderModal></CalenderModal>}
+      {calenderModal.modalVisibility && <CalenderModal date={date} dateUpdatingFn={updateDate} />}
+      {createTaskModal.modalVisibility &&  <CreateTask/>}
       <WeekNavbar/>
-      <CreateTask/>
-      <Button variant="create-task"
-        icon={<svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19 12.998H13V18.998H11V12.998H5V10.998H11V4.99799H13V10.998H19V12.998Z" fill="white"/>
-        </svg>}
-      />
+      <Button 
+        btnDimensions={{width: 4, height: 4}}
+        extraStyles={{
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          margin: "3em"
+        }}
+        backgroundColor='#0094DF'
+        icon={<CreateTaskIcon/>}
+        onClick={handelOpenCreateTaskModal}
+      ></Button>
       <TaskContainer/>
     </div>
   )

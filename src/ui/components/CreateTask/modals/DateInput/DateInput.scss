@@ -1,0 +1,58 @@
+.dateInputContainer {
+    position: absolute;
+    height: auto;
+    background-color: #171718;
+    width: 27em;
+    left: 3.5em;
+    border-radius: 1em;
+    border: 1px #5f5f62 solid;
+    overflow: hidden;
+    padding: 0.6em 2em 1.5em 2em;
+
+    .dateTopSection{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        // padding: 1em;
+        background-color: #171718;
+
+        button, svg {
+            width: 2em;
+            height: 2em;
+        }
+    }
+
+    input {
+        display: block;
+        margin: auto;
+        width: 17em;
+        height: 2.5em;
+        padding: 1em;
+        margin-block: 0.6em 1em;
+        font-size: 1.3rem;
+        font-weight: 500;
+        border-radius: 1em;
+        // border: 1px #00AAFF solid;
+    }
+
+    .monthYearContainer {
+        display: flex;
+        align-content: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        h4 span {
+            color: #00AAFF;
+        }
+
+        svg {
+            width: 1.5em;
+            height: 1.5em;
+            transform: rotate(180deg);
+        }
+    }
+
+}

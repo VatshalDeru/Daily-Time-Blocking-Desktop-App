@@ -1,37 +1,59 @@
-import { createContext, useReducer } from "react";
+import { createContext} from "react";
 
-export type modalContentType = 'calender-grid' | 'month-year-selector'
+export type modalContentType = 'calender-grid' | 'month-year-selector';                                                                              
 
-export type ModalContextType = {
-    calenderModal: {
-        modalVisibility: boolean,
-        showModal: () => void,
-        hideModal: () => void,
+type SingleModal = {
+    modalVisibility: boolean,
+    showModal: () => void,
+    hideModal: () => void,
+};
+
+export type TaskModalActions = "create" | "update";
+
+export type CalenderModal = SingleModal & {
         modalContent: modalContentType,
         toggleModalContent: () => void
+    };
+
+export type ModalContextType = {
+    calenderModal: CalenderModal,
+    calenderButtonRef: React.RefObject<HTMLButtonElement | null> | null;
+    createTaskModal: SingleModal & {
+        isCreating: boolean,
+        setIsCreating: (action: TaskModalActions) => void,
+        // timeModal: SingleModal,
     },
-    calenderButtonRef: React.RefObject<HTMLDivElement | null>;
-    createTaskModal: {
-        modalVisibility: boolean,
-        showModal: () => void,
-        hideModal: () => void,
-    }
+    taskDateModal: CalenderModal,
+    iconModal: SingleModal,
+    timeModal: SingleModal
 }
+
+const singleModal = {
+    modalVisibility: false,
+    showModal: () => {},
+    hideModal: () => {},
+};
 
 export const ModalContext = createContext<ModalContextType>({
     calenderModal: {
-        modalVisibility: false,
-        showModal: () => {},
-        hideModal: () => {},
+        ...singleModal,
         modalContent: 'calender-grid',
         toggleModalContent: () => {}
     },
-    calenderButtonRef: {current: null},
+    calenderButtonRef: null,
     createTaskModal: {
-        modalVisibility: false,
-        showModal: () => {},
-        hideModal: () => {},
-    }
+        ...singleModal,
+        isCreating: true,
+        setIsCreating: () => {},
+        // timeModal: singleModal,
+    },
+    taskDateModal: {
+        ...singleModal,
+        modalContent: 'calender-grid',
+        toggleModalContent: () => {},
+    },
+    iconModal: singleModal,
+    timeModal: singleModal
 });
 
 

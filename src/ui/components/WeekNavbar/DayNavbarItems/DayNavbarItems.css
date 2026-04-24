@@ -6,6 +6,7 @@
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
+  color: white;
 }
 .dayNavbarItem .dayNumber {
   display: flex;
@@ -20,10 +21,27 @@
 }
 
 .dayNavbarItem:hover {
-  background-color: #00AAFF;
+  background-color: white;
+  color: black;
   cursor: pointer;
 }
 .dayNavbarItem:hover .dayNumber {
-  background-color: white;
+  background-color: #00AAFF;
+  color: white;
+}
+
+.selectedDay {
+  background-color: #00AAFF !important;
+}
+.selectedDay .dayNumber {
+  background-color: rgb(255, 255, 255);
+  color: #00AAFF;
+}
+
+.selectedDay:hover {
+  color: white;
+}
+.selectedDay:hover .dayNumber {
+  background-color: rgb(255, 255, 255);
   color: #00AAFF;
 }/*# sourceMappingURL=DayNavbarItems.css.map */

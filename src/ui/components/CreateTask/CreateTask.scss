@@ -12,10 +12,10 @@
     display: flex;
     flex-direction: column;
     z-index: 1;
-    display: none;
+    // display: none;
 
     .topSection {
-        background-color: #F88E86;
+        // background-color: #F88E86;
         flex: 1;
         padding-inline: 2.5em;
         display: flex;
@@ -26,11 +26,17 @@
             justify-content: end;
             gap: 0.8em;
             margin-top: 1em;
+
+            svg {
+                height: 1.6em;
+                width: 1.6em;
+            };
         }
 
         .taskInfoContainer {
             // margin-inline: 3em;
             display: flex;
+            position: relative;
             justify-content: space-between;
             // gap: 1em;
             align-items: center;
@@ -93,6 +99,10 @@
                         &:focus {
                             outline: none;
                         }
+
+                        &::placeholder{
+                            color: rgb(255, 255, 255, 0.7);
+                        }
                     }
 
                     button {
@@ -114,12 +124,14 @@
     .bottomSection {
         display: flex;
         flex-direction: column;
-        // justify-content: center;
-        align-items: center;
-        background-color: #1c1c1e;
+        justify-content: space-between;
+        align-content: center;
+        // background-color: #1c1c1e;
+        background-color: #1C1C1E;
         height: auto;
         padding-inline: 2em;
         flex: 2;
+        // border: 1px red solid;
 
         .taskTimeDateInputContainer {
             background-color: #323232;
@@ -127,6 +139,7 @@
             width: 30em;
             border-radius: 1em;
             margin-top: 1.5em;
+            cursor: pointer;
             // padding: 1em;
 
             .dayInputContainer, .timeInputContainer {
@@ -146,55 +159,59 @@
 
             .timeInputContainer {
                 display: flex;
+                
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
 
-        .subTasksNotesContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 2em;
-            width: 30em;
-            border-radius: 1em;
-            background-color: #323232;
-            border: 1px solid #838383;
-            overflow: none;
+        // .subTasksNotesContainer {
+        //     display: flex;
+        //     flex-direction: column;
+        //     align-items: center;
+        //     margin-top: 2em;
+        //     width: 30em;
+        //     border-radius: 1em;
+        //     background-color: #323232;
+        //     border: 1px solid #838383;
+        //     overflow: none;
 
-            .subtaskInput, .taskNotes {
-                width: 100%;
-                padding: 1em;
-                box-sizing: border-box;
-            }
+        //     .subtaskInput, .taskNotes {
+        //         width: 100%;
+        //         padding: 1em;
+        //         box-sizing: border-box;
+        //     }
 
-            .subtaskInput input, .taskNotes textarea {
-                border: none;
-                background-color: transparent;
-                // border: 1px red solid;
-                width: inherit;
-                font-size: 1.4rem;
+        //     .subtaskInput input, .taskNotes textarea {
+        //         border: none;
+        //         background-color: transparent;
+        //         // border: 1px red solid;
+        //         width: inherit;
+        //         font-size: 1.4rem;
 
-                &:focus {
-                    outline: none;
-                }
-            }
+        //         &:focus {
+        //             outline: none;
+        //         }
+        //     }
 
-            .subtaskInput {
-               border-bottom: 1px solid #838383;
-            }
+        //     .subtaskInput {
+        //        border-bottom: 1px solid #838383;
+        //     }
 
-            .taskNotes {
+        //     .taskNotes {
 
-                textarea {
-                    // all: unset;
-                    width: 100% !important;
-                    overflow: none;
-                    resize: none;
-                    padding: 0;
+        //         textarea {
+        //             // all: unset;
+        //             width: 100% !important;
+        //             overflow: none;
+        //             resize: none;
+        //             padding: 0;
 
                     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
         .modifyTaskButtons {
             display: flex;
@@ -202,7 +219,7 @@
             // border: 1px red solid;
             right: 2em;
             width: 100%;
-            margin-top: 8em !important;
+            margin-bottom: 2em;
         }
     }
 }

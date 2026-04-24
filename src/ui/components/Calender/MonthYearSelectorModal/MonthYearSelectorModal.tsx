@@ -1,11 +1,16 @@
-import { useContext, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Button from "../../Button/Button";
-import { DateContext } from "../../../store/Date/DateContext";
-import { ModalContext } from "../../../store/Modal/ModalContext";
+// import { DateContext } from "../../../store/Date/DateContext";
+import { type CalenderModal } from "../../../store/Modal/ModalContext";
 
-export default function MonthYearSelectorModal() {
-    const { date, updateDate } = useContext(DateContext);
-    const { calenderModal } = useContext(ModalContext);
+type MonthYearSelectorProps = {
+  date: Date;
+  dateUpdatingFn: (date: Date) => void;
+  parentModal: CalenderModal;
+};
+
+export default function MonthYearSelectorModal({ date, dateUpdatingFn, parentModal }: MonthYearSelectorProps) {
+    // const { calenderModal } = useContext(ModalContext);
 
     // console.log(date);
     const monthsArr: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -91,48 +96,62 @@ export default function MonthYearSelectorModal() {
     }, [date, yearsArr]);
 
     function handleSelectMonthYear() {
-        const newDate = new Date(currentSelectedYear.current, currentSelectedMonth.current, date.getDate());
-        // console.log(newDate);
-        
-        updateDate(newDate);
-        calenderModal.toggleModalContent();
-    };
+        const year = currentSelectedYear.current;
+        const month = currentSelectedMonth.current;
+        const originalDay = date.getDate()
+        // console.log(originalDay, month,  year);
 
-    
+        // catching overflow dates when switch frommonths with greater days to months with smaller amount of dates
+        const maxDays = new Date(year, month + 1, 0).getDate();
+        const safeDate = Math.min(originalDay, maxDays)
+
+        const newDate = new Date(year, month, safeDate);
+        dateUpdatingFn(newDate);
+        parentModal.toggleModalContent();
+    };
     
     return <div className="monthYearSelectorModalContainer">
         <div className="selectorContainer">
-            <div className="monthSelectorOverlay"
-                ref={monthOverlayRef} 
-            ></div>
-            <div className="monthSelector"
-                ref={monthRef}
-                onScroll={checkSelectedItem}
-            >
-                <ul>
-                    {monthsArr.map(month => {
-                        return <li key={month}>{month}</li>
-                    })}
-                </ul>
+            <div className="monthSelectorColumn">
+                <div className="monthSelectorOverlay"
+                    ref={monthOverlayRef} 
+                ></div>
+                <div className="monthSelector"
+                    ref={monthRef}
+                    onScroll={checkSelectedItem}
+                >
+                    <ul>
+                        {monthsArr.map(month => {
+                            return <li key={month}>{month}</li>
+                        })}
+                    </ul>
+                </div>
             </div>
-            <div className="yearSelectorOverlay"
-                ref={yearOverlayRef}
-            ></div>
-            <div className="yearSelector"
-                ref={yearRef}
-                onScroll={checkSelectedItem}
-            >
-                <ul>
-                    {yearsArr.map(year => {
-                            return <li key={year}>{year}</li>
-                    })}   
-                </ul>      
+            <div className="yearSelectorColumn">
+                <div className="yearSelectorOverlay"
+                    ref={yearOverlayRef}
+                ></div>
+                <div className="yearSelector"
+                    ref={yearRef}
+                    onScroll={checkSelectedItem}
+                >
+                    <ul>
+                        {yearsArr.map(year => {
+                                return <li key={year}>{year}</li>
+                        })}   
+                    </ul>      
+                </div>
             </div>
         </div>
         <Button 
-            variant="update" 
+            // variant="update" 
             onClick={handleSelectMonthYear}
-            color="#05AAFF"
+            backgroundColor="#05AAFF"
+            extraStyles={{
+                borderRadius: "2em",
+                fontWeight: "bold",
+                padding: "1.2em 1.2em"
+            }}
             btnDimensions={{
                 width: 6,
                 height: 2

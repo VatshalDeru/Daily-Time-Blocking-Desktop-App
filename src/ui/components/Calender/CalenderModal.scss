@@ -1,14 +1,15 @@
-.overlay {
-    position: fixed;
-    inset: 0;
-    top: 6em;
-}
+// .overlay {
+//     position: fixed;
+//     inset: 0;
+//     top: 6em;
+// }
 
 .calenderModal {
     background-color: #2F2F2F;
     width: 25em;
-    height: 25em;
+    height: auto;
     padding: 1em;
+    padding-bottom: 2.5em;
     position: absolute;
     left: 2em;
     border-radius: 1em;
@@ -29,64 +30,18 @@
             gap: 0.5em;
             font-size: 1.5rem;
 
+            .rightArrowIcon {
+                // border: 1px red solid;
+                height: 40px;
+                transform: rotate(180deg);
+                svg {
+                    color:#00AAFF;
+                }
+            }
+
             span {
                 color: #00AAFF;
             }
         }
-    }
-
-    .calenderGrid {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        // display: grid;
-        // grid-template-columns:  20% 20% 20% 20% 20% 20% 20%;
-        // grid-template-rows:  20% 20% 20% 20% 20% 20% 20%;
-        .calenderDaysRow {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            margin-top: 1em;
-            gap: 6px;
-            text-align: center;
-            color: #666767;
-            font-weight:600;
-        }
-
-        .calenderDatesGrid {
-            display: grid;
-            margin-top: 1em;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 20px 0px;
-            text-align: center !important;
-
-            div {
-                display: flex;
-                justify-self: center;
-                // align-items: center;
-                border: 1px solid #666767;
-                width: 2em;
-                height: 2em;
-                border-radius: 50%;
-                // grid-column-start: 2;
-                // grid-column-end: 5;
-
-                &:hover {
-                    cursor: pointer;
-                    background-color: #fff;
-                    color: #666767;
-                }
-
-                p {
-                    text-align: center;
-                    margin: auto;
-                }
-            }
-
-            .selected {
-                background-color: #fff;
-                color: #666767;
-            }
-        }
-        
     }
 }

@@ -8,17 +8,28 @@ import './components/WeekNavbar/DayNavbarItems/DayNavbarItems.scss';
 import './components/TaskContainer/TaskContainer.scss'
 import './components/TaskContainer/TaskItem/TaskItem.scss'
 import './components/Calender/CalenderModal.scss'
+import './components/Calender/CalenderGrid/CalenderGrid.scss'
 import './components/Calender/MonthYearSelectorModal/MonthYearSelectorModal.scss'
 import './components/CreateTask/CreateTask.scss'
+import './components/CreateTask/modals/IconModal/IconModal.scss'
+import './components/CreateTask/modals/DateInput/DateInput.scss'
+import './components/CreateTask/modals/TimeModal/TimeModal.scss'
+import './components/CreateTask/modals/TimeModal/TimePicker.scss'
+import './components/CreateTask/modals/TimeModal/DurationPickers.scss'
+import './components/CreateTask/modals/TimeModal/DurationPresets.scss'
+
 import App from './App.tsx'
 import ModalContextProvider from './store/Modal/ModalContextProvider.tsx';
 import DateContextProvider from './store/Date/DateContextProvider.tsx';
+import TaskContextProvider from './store/Task/TaskContextProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <DateContextProvider>
       <ModalContextProvider>
-        <App />
+        <TaskContextProvider>
+          <App />
+        </TaskContextProvider>
       </ModalContextProvider>   
     </DateContextProvider>
   </StrictMode>
