@@ -50,7 +50,7 @@ const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProp
             }
             currTask.setDate(newTime);
         } else if(pickerType === 'endTime') {
-            const currentEndTime = new Date(currTask.date.getTime() + currTask.duration * 60000);
+            const currentEndTime = new Date(currTask.date.getTime() + currTask.duration);
             const newTime = new Date(currentEndTime);
             const { period: currPeriod } = getHoursAndPeriod(newTime);
             if(currPeriod === "AM") {
@@ -59,8 +59,8 @@ const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProp
                 newTime.setHours(newTime.getHours() - 12);
             }
             const newDurationMs = newTime.getTime() - currTask.date.getTime();
-            const newDurationMinutes = Math.round(newDurationMs / 60000);
-            currTask.setDuration(newDurationMinutes);
+            // const newDurationMinutes = Math.round(newDurationMs / 60000);
+            currTask.setDuration(newDurationMs);
         }
     };
 
@@ -107,7 +107,7 @@ const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProp
         
         // function to change values of the picker fields
         const handleKeyToUpdateFieldValue = (e: KeyboardEvent) => {
-            console.log("up pressed")
+            // console.log("up pressed")
             if(e.key === "ArrowUp") {
                 if(selectedField === "hours") {
                     updateDurationField("hours", pickerType, 1)

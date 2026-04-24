@@ -31,7 +31,7 @@ export default function DurationPresets({
 
   // console.log(currTask)
   const handleSelectDurationPreset = (preset: number) => {
-    console.log(preset*60*1000)
+    // console.log(preset*60*1000)
     currTask.setDuration(preset * 60 * 1000);
     // currTask.setTimeWindow({
     //   ...currTask.timeWindow,

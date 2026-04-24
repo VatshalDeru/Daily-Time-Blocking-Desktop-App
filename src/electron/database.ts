@@ -28,12 +28,26 @@ export const fetchUserData = async () => {
     }
 };
 
-// export const saveTaskDate = async (taskData) => {
-//     try {
-//         await client.query(`INSERT INTO tasks ()`)
-//     } catch (error) {
-//         console.error("Error saving task: ", error)
-//     }
-// };
+type taskDataType = {
+    icon: string,
+    colour: string,
+    date: Date,
+    duration: number,
+    isCompleted: boolean,
+    name: string,
+    // timeWindow: currTask.timeWindow
+}
+export const saveTaskDate = async (taskData: taskDataType) => {
+    try {
+        await client.query(`
+            INSERT INTO tasks (name, colour, icon, task_date, duration, is_completed)
+            VALUES ($1, $2, $3, $4, $5, $6)`,
+            [taskData.name, taskData.colour, taskData.icon, taskData.date, taskData.duration, taskData.isCompleted]
+        )
+        console.log('Successfully created task.')
+    } catch (error) {
+        console.error("Error saving task: ", error)
+    }
+};
 // export client;
 // testConnection();
