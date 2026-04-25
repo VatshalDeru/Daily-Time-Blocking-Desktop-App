@@ -47,7 +47,7 @@ function dateReducer(state: DateStateType, action: Action): DateStateType{
             const newDate = new Date(state.date);
 
             newDate.setDate(newDate.getDate() + 1);
-            console.log(newDate);
+            // console.log(newDate);
             return {
                 ...state,
                 date: newDate
@@ -57,7 +57,7 @@ function dateReducer(state: DateStateType, action: Action): DateStateType{
             const newDate = new Date(state.date);
 
             newDate.setDate(newDate.getDate() - 1);
-            console.log(newDate);
+            // console.log(newDate);
             return {
                 ...state,
                 date: newDate

@@ -23,7 +23,7 @@ export type TimeWindow = {
 
 export default function CreateTask() {
   const { createTaskModal, iconModal, timeModal, taskDateModal } = useContext(ModalContext);
-  const { currTask } = useContext(TaskContext);
+  const { currTask, tasks } = useContext(TaskContext);
   const createTaskRef = useRef<HTMLDivElement>(null)
   // console.log(date)
 
@@ -84,7 +84,7 @@ export default function CreateTask() {
   //   if(!inputObj.name || inputObj.name.trim().length === 0) return
   // };
 
-  const handleSubmitTask = () => {
+  const handleSubmitTask = async () => {
     const submittedTask = {
       icon: currTask.icon,
       colour: currTask.colour,
@@ -94,7 +94,23 @@ export default function CreateTask() {
       name: currTask.name,
       // timeWindow: currTask.timeWindow
     };
+
+    const allValuesTruthy = Object.values(submittedTask).every(
+        value => value !== null &&
+        value !== undefined &&
+        (typeof value !== "string" || value.trim() !== "")
+      );
+
+    if(!allValuesTruthy){
+      console.log("Invalid fields entered.");
+      return;
+    }; 
+
+    await window.electron.saveTask(submittedTask);
+
     console.log(submittedTask);
+    tasks.triggerRefresh();
+    createTaskModal.hideModal();
   }
 
   // console.log(formatDate(currTask.date as Date))

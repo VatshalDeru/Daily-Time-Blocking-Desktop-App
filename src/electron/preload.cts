@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const electron = require('electron');
-const client = require('./database')
 
-electron.contextBridge.exposeInMainWorld("electron", {
-    getTasks: () => {
-        return;
+import { contextBridge, ipcRenderer } from 'electron';
+
+contextBridge.exposeInMainWorld('electron', {
+    saveTask: async (task: Object) => {
+        return await ipcRenderer.invoke('save-task', task);
+    },
+    fetchTasks: async (date: string) => {
+        return await ipcRenderer.invoke('fetch-tasks', date);
     }
-})
+});

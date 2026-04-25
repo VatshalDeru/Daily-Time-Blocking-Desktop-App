@@ -37,7 +37,8 @@ type taskDataType = {
     name: string,
     // timeWindow: currTask.timeWindow
 }
-export const saveTaskDate = async (taskData: taskDataType) => {
+export const saveTaskData = async (taskData: taskDataType) => {
+    console.log(taskData);
     try {
         await client.query(`
             INSERT INTO tasks (name, colour, icon, task_date, duration, is_completed)

@@ -23,7 +23,9 @@ function App() {
     createTaskModal.setIsCreating('create');
     createTaskModal.showModal();
   };
-  
+
+  console.log(window.electron);
+
   return (
     <div className='appContainer'>
       <Header/>

@@ -4,7 +4,7 @@ export type CurrTask = {
   icon: string,
   colour: string,
   name: string,
-  date: Date,
+  date: Date | null,
   duration: number,
   isCompleted: boolean,
 };
@@ -18,6 +18,12 @@ export type TaskContextType = {
       setDuration: (duration: number) => void,
       setIsCompleted: (isCompleted: boolean) => void,
     },
+    tasks: {
+      tasksForCurrDay: CurrTask[],
+      setTasksForCurrDay: (tasks: CurrTask[]) => void,
+      refreshKey: number,
+      triggerRefresh: () => void,
+    }
 }
 
 export const TaskContext = createContext<TaskContextType>({
@@ -35,4 +41,10 @@ export const TaskContext = createContext<TaskContextType>({
         setDuration: () => {},
         setIsCompleted: () => {},
     },
+    tasks: {
+      tasksForCurrDay: [],
+      setTasksForCurrDay: () => {},
+      refreshKey: 0,
+      triggerRefresh: () => {},
+    }
 });
