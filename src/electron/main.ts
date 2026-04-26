@@ -4,7 +4,7 @@ import { isDev } from './util.js';
 import path from "path";
 import { getPreloadPath } from './pathResolver.js';
 import { error } from 'console';
-import { fetchTaskData } from './tasks.js';
+import { checkTaskTimeOverlaps, fetchTaskData } from './tasks.js';
 
 app.on("ready", () => {
     const mainWindow = new BrowserWindow({
@@ -35,17 +35,30 @@ app.on("ready", () => {
     //     }
     // })
 
-    ipcMain.handle("save-task", async (event, task) => {
+    // saves tasks to db
+    ipcMain.handle("save-task", async (_, task) => {
         console.log(task);
         const response = await saveTaskData(task);
         console.log(response);
         return response;
     })
 
-    ipcMain.handle("fetch-tasks", async (event, date) => {
+    // fetches tasks from db
+    ipcMain.handle("fetch-tasks", async (_, date) => {
         console.log(date);
-        const response = await fetchTaskData(date);
-        console.log(response);
-        return response;
+        const tasks = await fetchTaskData(date);
+        console.log(tasks);
+        return tasks;
     })
+
+    // checks if there are any tasks that overlap in time with the time of the task the user is trying to create
+    ipcMain.handle('tasks:has-time-overlap', async (_, date, duration) => {
+        console.log('date and duration in ipcmain.handle: ', date + ' ' + duration);
+
+        const overlappingTasks = await checkTaskTimeOverlaps(date, duration);
+        console.log('overlap response in ipcMain.handle: ', overlappingTasks);
+
+        if(overlappingTasks?.length === 0) return false
+        else return true;
+    } )
 });

@@ -25,10 +25,8 @@ export default function CreateTask() {
   const { createTaskModal, iconModal, timeModal, taskDateModal } = useContext(ModalContext);
   const { currTask, tasks } = useContext(TaskContext);
   const createTaskRef = useRef<HTMLDivElement>(null)
-  // console.log(date)
 
-  // console.log(currTask.date);
-
+  // formats the time to be displayed at the top of the modal
   const getDisplayTime = (date: Date) => {
     const { hours, minutes, period} = formatTime(date)
 
@@ -39,6 +37,8 @@ export default function CreateTask() {
   // need to pad minutes with 0,
   // this formats the time window that will be displayed at the top of the modal and also in the time input area
   const timeWindow = useMemo(() => {
+    if(!currTask || !currTask.date) return;
+
     const taskEndTime = new Date(currTask.date.getTime() + currTask.duration);
     const formattedStartTime = getDisplayTime(currTask.date);
     const formattedEndTime = getDisplayTime(taskEndTime);
@@ -70,6 +70,7 @@ export default function CreateTask() {
     }
   }, [currTask]);
 
+  // useEffect to disable scrolling  when the cursor is inside of the modal
   useEffect(() => {
       document.body.style.overflow = "hidden";
       return () => {
@@ -77,12 +78,8 @@ export default function CreateTask() {
       };
   }, [currTask]);
 
-  
+  // custom hook to close modal when clicked outside
   useClickOutside({ref:createTaskRef, closeHandler: createTaskModal.hideModal})
-
-  // const validateFormSubmission = (inputObj) => {
-  //   if(!inputObj.name || inputObj.name.trim().length === 0) return
-  // };
 
   const handleSubmitTask = async () => {
     const submittedTask = {
@@ -95,13 +92,17 @@ export default function CreateTask() {
       // timeWindow: currTask.timeWindow
     };
 
+    // check all values of the task object are truthy
     const allValuesTruthy = Object.values(submittedTask).every(
         value => value !== null &&
         value !== undefined &&
         (typeof value !== "string" || value.trim() !== "")
       );
 
-    if(!allValuesTruthy){
+    const taskTimeIsOverLapping = await window.electron.checkTaskTimeOverlaps(submittedTask.date, submittedTask.duration);
+    console.log("taskTimeIsOverlapping in CreateTasks near line 103: ", taskTimeIsOverLapping);
+
+    if(!allValuesTruthy || taskTimeIsOverLapping){
       console.log("Invalid fields entered.");
       return;
     }; 

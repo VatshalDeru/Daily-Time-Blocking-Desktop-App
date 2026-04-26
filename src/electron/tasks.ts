@@ -41,3 +41,20 @@ export const fetchTaskData = async (date: Date) => {
         console.error("Error saving task: ", error)
     }
 }
+
+export const checkTaskTimeOverlaps = async (date: Date, duration: number) => {
+    try {
+        const endTime = new Date(date.getTime() + duration);
+
+        const overlappingTasks = await client.query(`
+            SELECT *
+            FROM tasks
+            WHERE task_date + duration * INTERVAL '1 millisecond' > $1
+            AND task_date < $2`,
+        [date, endTime])
+        console.log("overlapping tasks: ", overlappingTasks);
+        return overlappingTasks.rows;
+    } catch (error) {
+        console.error("Error saving task: ", error)
+    }
+}

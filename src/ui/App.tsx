@@ -24,7 +24,7 @@ function App() {
     createTaskModal.showModal();
   };
 
-  console.log(window.electron);
+  // console.log(window.electron);
 
   return (
     <div className='appContainer'>

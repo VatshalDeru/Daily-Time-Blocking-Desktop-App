@@ -8,5 +8,8 @@ contextBridge.exposeInMainWorld('electron', {
     },
     fetchTasks: async (date: string) => {
         return await ipcRenderer.invoke('fetch-tasks', date);
+    },
+    checkTaskTimeOverlaps: async  (date: Date, duration: number) => {
+        return await ipcRenderer.invoke('tasks:has-time-overlap', date, duration)
     }
 });
