@@ -1,12 +1,14 @@
 import { useReducer } from "react";
 import { TaskContext, type CurrTask, type TaskContextType} from "./TaskContext"
 
-type TaskStateType = {
-    currTask: CurrTask,
-    tasks: {
+export type taskType = {
         tasksForCurrDay: CurrTask[],
         refreshKey: number,
     }
+
+type TaskStateType = {
+    currTask: CurrTask,
+    tasks: taskType
 };
 
 const INITIAL_TASK_STATE_OBJECT = {
@@ -31,6 +33,8 @@ type Action = {type: "SET_ICON", payload: { icon: string }}
     | { type: "SET_DURATION", payload: {duration: number }}
     | { type: "SET_IS_COMPLETED", payload: { isCompleted: boolean }}
     | { type: "SET_CURR_DAY_TASKS", payload: { tasks: CurrTask[] }}
+    | { type: "SET_CURR_TASK", payload: { task: CurrTask }}
+    | { type: "CLEAR_CURR_TASK"}
     | { type: "TRIGGER_REFRESH"};
 
 const taskReducer = (state: TaskStateType, action: Action): TaskStateType => {
@@ -90,6 +94,23 @@ const taskReducer = (state: TaskStateType, action: Action): TaskStateType => {
                 tasks: {
                     ...state.tasks,
                     tasksForCurrDay: action.payload.tasks
+                }
+            }
+        case "SET_CURR_TASK":
+            return {
+                ...state,
+                currTask: action.payload.task
+            }
+        case "CLEAR_CURR_TASK": 
+            return {
+                ...state,
+                currTask: {
+                    icon: "solar:sun-bold",
+                    colour: '#F88E86',
+                    name: '',
+                    date: null,
+                    duration: 15*60*1000,
+                    isCompleted: false,
                 }
             }
         case "TRIGGER_REFRESH": 
@@ -168,6 +189,21 @@ export default function TaskContextProvider({ children }: TaskContextProviderPro
         })
     };
 
+    const setCurrTask = (task: CurrTask) => {
+        taskDispatch({
+            type: "SET_CURR_TASK",
+            payload: {
+                task
+            }
+        })
+    }
+
+    const clearCurrTask = () => {
+        taskDispatch({
+            type: "CLEAR_CURR_TASK"
+        });
+    };
+
     const triggerRefresh = () => {
         taskDispatch({
             type: "TRIGGER_REFRESH"
@@ -184,14 +220,14 @@ export default function TaskContextProvider({ children }: TaskContextProviderPro
             setDuration,
             // setTimeWindow,
             setIsCompleted,
+            setCurrTask,
+            clearCurrTask
         },
         tasks: {
             ...taskState.tasks,
             setTasksForCurrDay,
             triggerRefresh,
-
         }
-
     };
 
     return <TaskContext.Provider value={taskCtxValue}>

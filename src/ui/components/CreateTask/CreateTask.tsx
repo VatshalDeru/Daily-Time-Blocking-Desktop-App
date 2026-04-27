@@ -71,8 +71,16 @@ export default function CreateTask() {
   }, [currTask]);
 
   // useEffect to disable scrolling  when the cursor is inside of the modal
-  useEffect(() => {
+  useEffect(() => {  
       document.body.style.overflow = "hidden";
+      
+      const taskTime = Math.floor(currTask.date?.getTime() as number / (1000 * 60));
+      const currTime = Math.floor(new Date().getTime() / (1000 * 60));
+      if(taskTime !== currTime && createTaskModal.modalMode === 'create') {
+        currTask.setDate(new Date());
+      }
+
+
       return () => {
           document.body.style.overflow = "auto";
       };
@@ -111,6 +119,7 @@ export default function CreateTask() {
 
     console.log(submittedTask);
     tasks.triggerRefresh();
+    currTask.clearCurrTask();
     createTaskModal.hideModal();
   }
 

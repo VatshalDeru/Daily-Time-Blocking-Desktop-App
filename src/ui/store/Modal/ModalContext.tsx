@@ -8,7 +8,7 @@ type SingleModal = {
     hideModal: () => void,
 };
 
-export type TaskModalActions = "create" | "update";
+export type createTaskModalMode = "create" | "update";
 
 export type CalenderModal = SingleModal & {
         modalContent: modalContentType,
@@ -19,8 +19,8 @@ export type ModalContextType = {
     calenderModal: CalenderModal,
     calenderButtonRef: React.RefObject<HTMLButtonElement | null> | null;
     createTaskModal: SingleModal & {
-        isCreating: boolean,
-        setIsCreating: (action: TaskModalActions) => void,
+        modalMode: 'create',
+        setModalMode: (action: createTaskModalMode) => void,
         // timeModal: SingleModal,
     },
     taskDateModal: CalenderModal,
@@ -43,8 +43,8 @@ export const ModalContext = createContext<ModalContextType>({
     calenderButtonRef: null,
     createTaskModal: {
         ...singleModal,
-        isCreating: true,
-        setIsCreating: () => {},
+        modalMode: 'create',
+        setModalMode: () => {},
         // timeModal: singleModal,
     },
     taskDateModal: {

@@ -20,7 +20,7 @@ function App() {
 
   const handelOpenCreateTaskModal = () => {
     currTask.setDate(date);
-    createTaskModal.setIsCreating('create');
+    createTaskModal.setModalMode('create');
     createTaskModal.showModal();
   };
 

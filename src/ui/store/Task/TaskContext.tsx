@@ -17,6 +17,8 @@ export type TaskContextType = {
       setDate: (date: Date) => void,
       setDuration: (duration: number) => void,
       setIsCompleted: (isCompleted: boolean) => void,
+      setCurrTask: (task: CurrTask) => void
+      clearCurrTask: () => void
     },
     tasks: {
       tasksForCurrDay: CurrTask[],
@@ -40,6 +42,8 @@ export const TaskContext = createContext<TaskContextType>({
         setDate: () => {},
         setDuration: () => {},
         setIsCompleted: () => {},
+        setCurrTask: () => {},
+        clearCurrTask: () => {}
     },
     tasks: {
       tasksForCurrDay: [],

@@ -1,7 +1,7 @@
 import { useReducer, useRef } from "react";
 import { ModalContext } from "./ModalContext";
 import type { modalContentType, ModalContextType } from "./ModalContext";
-import type { TaskModalActions } from "./ModalContext";
+import type { createTaskModalMode } from "./ModalContext";
 
 type ModalName = "calenderModal" | "createTaskModal" | "taskDateModal" |"iconModal" | "timeModal";
 
@@ -22,7 +22,7 @@ type ModalStateType = {
   };
   createTaskModal: {
     modalVisibility: boolean;
-    isCreating: boolean;
+    modalMode: createTaskModalMode;
   };
   taskDateModal: {
     modalVisibility: boolean;
@@ -249,14 +249,14 @@ export default function ModalContextProvider({
     });
   };
 
-  const setIsCreating = (action: TaskModalActions) => {
+  const setModalMode = (action: createTaskModalMode) => {
     if(action === "create") {
       modalDispatch({
         type: "CREATE_TASK_MODAL_ACTIVE"
       })
     } else if(action === "update") {
       modalDispatch({
-        type: "CREATE_TASK_MODAL_ACTIVE"
+        type: "UPDATE_TASK_MODAL_ACTIVE"
       })
     }
   }
@@ -272,10 +272,10 @@ export default function ModalContextProvider({
     calenderButtonRef: calenderButtonRef,
     createTaskModal: {
       modalVisibility: modalState.createTaskModal.modalVisibility,
-      isCreating: modalState.createTaskModal.isCreating,
+      modalMode: modalState.createTaskModal.modalMode,
       showModal: showCreateTaskModal,
       hideModal: hideCreateTaskModal,
-      setIsCreating,
+      setModalMode,
     },
     taskDateModal: {
       modalVisibility: modalState.taskDateModal.modalVisibility,

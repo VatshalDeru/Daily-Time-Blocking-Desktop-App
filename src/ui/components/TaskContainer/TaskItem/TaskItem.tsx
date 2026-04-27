@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import type { CurrTask } from "../../../store/Task/TaskContext";
 // import { start } from "repl";
 
 type Time = {
@@ -10,12 +11,13 @@ type TaskItemsProps = {
     icon: string;
     name: string;
     time: Time;
-    // taskDuration?: object;
     colour: string;
+    task: CurrTask;
+    onClick: (task: CurrTask) => void
 };
 
 
-export default function TaskItem({ icon, name, time, colour }: TaskItemsProps) {
+export default function TaskItem({ icon, name, time, colour, task, onClick }: TaskItemsProps) {
     const startTime = time.startTime.toLocaleTimeString("en-GB", {
         hour: "numeric",
         minute: "2-digit",
@@ -30,7 +32,9 @@ export default function TaskItem({ icon, name, time, colour }: TaskItemsProps) {
             startTime
         : `${startTime} - ${endTime}`;
  
-    return <div className="taskItem">
+
+
+    return <div className="taskItem" onClick={() => onClick(task)}>
         <div className="taskInfo">
             <p className="leftTime">{startTime}</p>
             <div className="taskIconContainer" style={{backgroundColor: colour}}>
