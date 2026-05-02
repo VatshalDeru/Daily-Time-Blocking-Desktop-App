@@ -49,17 +49,31 @@ export default function TaskContainer() {
     const { tasks, currTask } = useContext(TaskContext);
     const { createTaskModal } = useContext(ModalContext);
 
+    type transformedTasksProps = {
+        id: number,
+        task_date: Date,
+        is_completed: boolean,
+        task: Partial <CurrTask>
+    }
+
     useEffect(() => {
         console.log("fetching tasks....")
         const fetchTasks = async () => {
             const fetchedTasks = await window.electron.fetchTasks(date);
-            console.log(fetchedTasks);
+            // console.log(fetchedTasks);
             if(JSON.stringify(fetchedTasks) !== JSON.stringify(tasks.tasksForCurrDay)) {
-                const transformedTasks = fetchedTasks.map(({ task_date, ...task}) => {
-                // console.log(task)
-                    return {
+                const transformedTasks = fetchedTasks.map(({ id, task_date, is_completed,...task}: transformedTasksProps) => {
+                console.log('transformed Fetched Task: ', {
+                        taskId: id,
+                        date: task_date,
+                        isCompleted: is_completed,
                         ...task,
-                        date: task_date
+                    })
+                    return {
+                        taskId: id,
+                        date: task_date,
+                        isCompleted: is_completed,
+                        ...task,
                     }
                 })
                 tasks.setTasksForCurrDay(transformedTasks);
@@ -71,6 +85,7 @@ export default function TaskContainer() {
 
     const handleTaskClick = (task: CurrTask) => {
         currTask.setCurrTask(task);
+        currTask
         createTaskModal.setModalMode('update');
         createTaskModal.showModal();
     }

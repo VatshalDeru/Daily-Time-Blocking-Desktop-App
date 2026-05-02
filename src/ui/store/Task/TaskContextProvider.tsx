@@ -13,6 +13,7 @@ type TaskStateType = {
 
 const INITIAL_TASK_STATE_OBJECT = {
     currTask: {
+        id: null,
         icon: "solar:sun-bold",
         colour: '#F88E86',
         name: '',
@@ -26,7 +27,8 @@ const INITIAL_TASK_STATE_OBJECT = {
     }
 };
 
-type Action = {type: "SET_ICON", payload: { icon: string }}
+type Action = {type: "SET_TASK_ID", payload: { id: number }}
+    | {type: "SET_ICON", payload: { icon: string }}
     | { type: "SET_COLOUR", payload: { colour: string }}
     | { type: "SET_NAME", payload: { name: string }}
     | { type: "SET_DATE", payload: { date: Date }}
@@ -39,6 +41,14 @@ type Action = {type: "SET_ICON", payload: { icon: string }}
 
 const taskReducer = (state: TaskStateType, action: Action): TaskStateType => {
     switch(action.type) {
+        case "SET_TASK_ID" : 
+            return {
+                ...state,
+                currTask: {
+                    ...state.currTask,
+                    taskId: action.payload.id
+                }
+            }
         case "SET_ICON" :
             return {
                 ...state,
@@ -132,6 +142,13 @@ type TaskContextProviderProps = {
 export default function TaskContextProvider({ children }: TaskContextProviderProps) {
     const [taskState, taskDispatch] = useReducer(taskReducer, INITIAL_TASK_STATE_OBJECT);
     
+    const setTaskId = (id: number) => {
+        taskDispatch({
+            type: 'SET_TASK_ID',
+            payload: { id }
+        })
+    }
+
     const setIcon = (icon: string) => {
         taskDispatch({
             type: "SET_ICON", 
@@ -213,6 +230,7 @@ export default function TaskContextProvider({ children }: TaskContextProviderPro
     const taskCtxValue: TaskContextType = {
         currTask: {
             ...taskState.currTask,
+            setTaskId,
             setIcon,
             setColour,
             setName,

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
 import { contextBridge, ipcRenderer } from 'electron';
+import { updateTask } from './tasks';
+
 
 contextBridge.exposeInMainWorld('electron', {
     saveTask: async (task: Object) => {
@@ -10,6 +12,9 @@ contextBridge.exposeInMainWorld('electron', {
         return await ipcRenderer.invoke('fetch-tasks', date);
     },
     checkTaskTimeOverlaps: async  (date: Date, duration: number) => {
-        return await ipcRenderer.invoke('tasks:has-time-overlap', date, duration)
+        return await ipcRenderer.invoke('tasks:has-time-overlap', date, duration);
+    },
+    updateTask: async (task: Object) => {
+        return await ipcRenderer.invoke('update-task', task);
     }
 });

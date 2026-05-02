@@ -7,7 +7,7 @@ import DateInput from "./modals/DateInput/DateInput";
 import IconModal from "./modals/IconModal/IconModal";
 import TimeModal from "./modals/TimeModal/TimeModal";
 import useClickOutside from "../../hooks/useClickOutside";
-import { TaskContext } from "../../store/Task/TaskContext";
+import { TaskContext, type CurrTask } from "../../store/Task/TaskContext";
 import { formatDate, formatTime} from "../../utils/util";
 import { Icon } from "@iconify/react";
 import CloseIcon from "../icons/CloseIcon";
@@ -25,6 +25,18 @@ export default function CreateTask() {
   const { createTaskModal, iconModal, timeModal, taskDateModal } = useContext(ModalContext);
   const { currTask, tasks } = useContext(TaskContext);
   const createTaskRef = useRef<HTMLDivElement>(null)
+  const originalTaskCopy = useRef<CurrTask>(currTask);
+  // console.log('createTaskModal modalMode: ', createTaskModal.modalMode)
+  console.log(createTaskModal.modalMode);
+  useEffect(() => {
+    if(createTaskModal.modalMode === 'update') {
+      console.log('time reset')
+      originalTaskCopy.current = {
+        ...currTask,
+        date: new Date(currTask.date as Date)
+      };
+    }
+  }, [])
 
   // formats the time to be displayed at the top of the modal
   const getDisplayTime = (date: Date) => {
@@ -74,12 +86,11 @@ export default function CreateTask() {
   useEffect(() => {  
       document.body.style.overflow = "hidden";
       
-      const taskTime = Math.floor(currTask.date?.getTime() as number / (1000 * 60));
-      const currTime = Math.floor(new Date().getTime() / (1000 * 60));
-      if(taskTime !== currTime && createTaskModal.modalMode === 'create') {
-        currTask.setDate(new Date());
-      }
-
+      // const taskTime = Math.floor(currTask.date?.getTime() as number / (1000 * 60));
+      // const currTime = Math.floor(new Date().getTime() / (1000 * 60));
+      // if(taskTime !== currTime && createTaskModal.modalMode === 'create') {
+      //   currTask.setDate(new Date());
+      // }
 
       return () => {
           document.body.style.overflow = "auto";
@@ -111,13 +122,44 @@ export default function CreateTask() {
     console.log("taskTimeIsOverlapping in CreateTasks near line 103: ", taskTimeIsOverLapping);
 
     if(!allValuesTruthy || taskTimeIsOverLapping){
-      console.log("Invalid fields entered.");
+      console.log("Invalid fields entered. heres your submitted object: ", submittedTask);
       return;
     }; 
 
     await window.electron.saveTask(submittedTask);
 
     console.log(submittedTask);
+    tasks.triggerRefresh();
+    currTask.clearCurrTask();
+    createTaskModal.hideModal();
+  }
+
+  const handleUpdateTask = async () => {
+    const submittedTask = {
+      taskId: currTask.taskId,
+      icon: currTask.icon,
+      colour: currTask.colour,
+      date: currTask.date,
+      duration: currTask.duration,
+      isCompleted: currTask.isCompleted,
+      name: currTask.name,
+    };
+
+    const updatedTask = Object.fromEntries((Object.keys(submittedTask) as (keyof CurrTask)[])
+    .filter((key: keyof CurrTask) => submittedTask[key] !== originalTaskCopy.current[key])
+    .map(key => [key, submittedTask[key]]) 
+    ) as Partial<CurrTask>
+
+    console.log({
+      ...updatedTask,
+      taskId: submittedTask.taskId
+    });
+
+    await window.electron.updateTask({
+      ...updatedTask,
+      taskId: submittedTask.taskId
+    });
+
     tasks.triggerRefresh();
     currTask.clearCurrTask();
     createTaskModal.hideModal();
@@ -204,14 +246,14 @@ export default function CreateTask() {
             btnDimensions={{ width: 3, height: 3 }}
           ></Button>
           <Button 
-            onClick={handleSubmitTask}
+            onClick={createTaskModal.modalMode === 'create' ? handleSubmitTask : handleUpdateTask}
             backgroundColor={currTask.colour}
             extraStyles={{
               borderRadius: "2em",
               paddingInline: "1em",
               fontWeight: "bold"
             }}
-          >{createTaskModal.isCreating ? 'Create Task' : 'Update'}</Button>
+          >{createTaskModal.modalMode === 'create' ? 'Create Task' : 'Update'}</Button>
         </div>
       </div>
     </div>

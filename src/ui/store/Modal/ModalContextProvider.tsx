@@ -12,8 +12,8 @@ type Action =
   | { type: "HIDE_MODAL"; payload: { modalName: ModalName } }
   | { type: "TOGGLE_CALENDER_MODAL_CONTENT" }
   | { type: "TOGGLE_TASK_DATE_MODAL_CONTENT" }
-  | { type: "CREATE_TASK_MODAL_ACTIVE" }
-  | { type: "UPDATE_TASK_MODAL_ACTIVE" };
+  | { type: "CREATE_TASK_MODAL_MODE_CREATE" }
+  | { type: "CREATE_TASK_MODAL_MODE_UPDATE" };
 
 type ModalStateType = {
   calenderModal: {
@@ -43,7 +43,7 @@ const INITIAL_MODAL_STATE_OBJECT: ModalStateType = {
   },
   createTaskModal: {
     modalVisibility: false,
-    isCreating: false,
+    modalMode: 'create',
   },
   taskDateModal: {
     modalVisibility: false,
@@ -112,21 +112,21 @@ function modalReducer(state: ModalStateType, action: Action): ModalStateType {
         },
       };
     }
-    case "CREATE_TASK_MODAL_ACTIVE": {
+    case "CREATE_TASK_MODAL_MODE_CREATE": {
       return {
         ...state,
         createTaskModal:{
           ...state.createTaskModal,
-          isCreating: true,
+          modalMode: 'create',
         }
       }
     }
-    case "UPDATE_TASK_MODAL_ACTIVE": {
+    case "CREATE_TASK_MODAL_MODE_UPDATE": {
       return {
         ...state,
         createTaskModal:{
           ...state.createTaskModal,
-          isCreating: false,
+          modalMode: 'update',
         }
       }
     }
@@ -252,11 +252,11 @@ export default function ModalContextProvider({
   const setModalMode = (action: createTaskModalMode) => {
     if(action === "create") {
       modalDispatch({
-        type: "CREATE_TASK_MODAL_ACTIVE"
+        type: "CREATE_TASK_MODAL_MODE_CREATE"
       })
     } else if(action === "update") {
       modalDispatch({
-        type: "UPDATE_TASK_MODAL_ACTIVE"
+        type: "CREATE_TASK_MODAL_MODE_UPDATE"
       })
     }
   }

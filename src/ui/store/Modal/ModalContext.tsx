@@ -19,7 +19,7 @@ export type ModalContextType = {
     calenderModal: CalenderModal,
     calenderButtonRef: React.RefObject<HTMLButtonElement | null> | null;
     createTaskModal: SingleModal & {
-        modalMode: 'create',
+        modalMode: createTaskModalMode,
         setModalMode: (action: createTaskModalMode) => void,
         // timeModal: SingleModal,
     },

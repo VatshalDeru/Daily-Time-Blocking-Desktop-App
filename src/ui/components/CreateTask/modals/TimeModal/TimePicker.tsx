@@ -20,6 +20,7 @@ export default function TimePicker({ time, pickerType }: TimePickerProps) {
 const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProps['pickerType'], change: 1 | -1) => {
     if(!currTask.date) return;
 
+    console.log('updateDurationField (TimePicker.tsx): ', field, pickerType, change);
     if(pickerType === 'startTime') {
         // Only update hours/minutes, keep the date part
         const newDate = new Date(currTask.date);
@@ -29,10 +30,10 @@ const updateDurationField = (field: "hours" | "mins", pickerType: TimePickerProp
     } else if(pickerType === 'endTime') {
         // Compute current end time, adjust it, then update duration in ms
         const currentEndTime = new Date(currTask.date.getTime() + currTask.duration);
-        const newTime = new Date(currentEndTime);
-        if(field === "hours") newTime.setHours(newTime.getHours() + change);
-        else if (field === "mins") newTime.setMinutes(newTime.getMinutes() + change);
-        const newDurationMs = newTime.getTime() - currTask.date.getTime();
+        // const newTime = new Date(currentEndTime);
+        if(field === "hours") currentEndTime.setHours(currentEndTime.getHours() + change);
+        else if (field === "mins") currentEndTime.setMinutes(currentEndTime.getMinutes() + change);
+        const newDurationMs = currentEndTime.getTime() - currTask.date.getTime();
         currTask.setDuration(newDurationMs);
     }
 };

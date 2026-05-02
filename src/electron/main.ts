@@ -4,7 +4,7 @@ import { isDev } from './util.js';
 import path from "path";
 import { getPreloadPath } from './pathResolver.js';
 import { error } from 'console';
-import { checkTaskTimeOverlaps, fetchTaskData } from './tasks.js';
+import { checkTaskTimeOverlaps, fetchTaskData, updateTask } from './tasks.js';
 
 app.on("ready", () => {
     const mainWindow = new BrowserWindow({
@@ -24,16 +24,6 @@ app.on("ready", () => {
     testConnection()
         .then(fetchUserData)
         .catch(err => console.error(err));
-
-    // ipcMain.handle("save-task", async (event, taskData) => {
-    //     try {
-    //         await saveTaskData(taskData);
-    //         return { success: true }
-    //     } catch (error) {
-    //         console.error('Error saving task:', error);
-    //         return { success: false, error: error.message };
-    //     }
-    // })
 
     // saves tasks to db
     ipcMain.handle("save-task", async (_, task) => {
@@ -60,5 +50,11 @@ app.on("ready", () => {
 
         if(overlappingTasks?.length === 0) return false
         else return true;
-    } )
+    });
+
+    // updates only changed fields of the task record in db
+    ipcMain.handle('update-task', async (_, task) => {
+        const response = await updateTask(task);
+        console.log('update tasks response in ipcMain.handle: ', response);
+    });
 });
