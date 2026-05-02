@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { TaskContext } from "../../../../store/Task/TaskContext";
+import { ModalContext } from "../../../../store/Modal/ModalContext";
 
 type DurationPresetsProps = {
   selectedDurationPreset: number | null;
@@ -18,6 +19,7 @@ export default function DurationPresets({
 }: DurationPresetsProps) {
   // const [selectedDurationPreset, setSlectedDurationPreset] = useState(1);
   const { currTask } = useContext(TaskContext);
+  const { timeModal } = useContext(ModalContext);
 
 
   const formatDuration = (duration: number) => {
@@ -39,6 +41,7 @@ export default function DurationPresets({
     // })
     setSelectedDurationPreset(preset);
     setCustomDurationDefault();
+    timeModal.hideModal();
   };
   // console.log(currTask.duration/(1000*60))
 

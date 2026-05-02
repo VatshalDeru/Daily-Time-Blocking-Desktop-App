@@ -165,6 +165,14 @@ export default function CreateTask() {
     createTaskModal.hideModal();
   }
 
+  const deleteTask = async () => {
+    await window.electron.deleteTask(currTask.taskId);
+
+    tasks.triggerRefresh();
+    currTask.clearCurrTask();
+    createTaskModal.hideModal();
+  };
+
   // console.log(formatDate(currTask.date as Date))
   return (
     <div className="createTaskContainer" ref={createTaskRef}>
@@ -226,7 +234,8 @@ export default function CreateTask() {
           </div>
         </div> */}
         <div className="modifyTaskButtons">
-          <Button
+          {createTaskModal.modalMode === 'update' ? <Button
+            onClick={deleteTask}
             icon={
               <svg
                 width="20"
@@ -242,9 +251,11 @@ export default function CreateTask() {
               </svg>
             }
             backgroundColor="#242424"
-            extraStyles={{border: "1px solid #858585"}}
+            extraStyles={{
+              border: "1px solid #858585",
+            }}
             btnDimensions={{ width: 3, height: 3 }}
-          ></Button>
+          ></Button> : <div></div>}
           <Button 
             onClick={createTaskModal.modalMode === 'create' ? handleSubmitTask : handleUpdateTask}
             backgroundColor={currTask.colour}

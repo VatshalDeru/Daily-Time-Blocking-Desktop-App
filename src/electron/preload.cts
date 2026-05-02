@@ -16,5 +16,8 @@ contextBridge.exposeInMainWorld('electron', {
     },
     updateTask: async (task: Object) => {
         return await ipcRenderer.invoke('update-task', task);
+    },
+    deleteTask: async (taskId: number) => {
+        return await ipcRenderer.invoke('delete-task', taskId);
     }
 });

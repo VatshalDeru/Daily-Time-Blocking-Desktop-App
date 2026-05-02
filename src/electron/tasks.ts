@@ -61,36 +61,43 @@ export const checkTaskTimeOverlaps = async (date: Date, duration: number) => {
 }
 
 export const updateTask = async (taskChanges: Partial<taskDataType>) => {
-
     try {
-        // type taskChangesMapType = {
-        //     date: string;
-        // }
         const taskChangesMap: Record<string, string> = {
             date: 'task_date'
         }
 
+        // filtering to get rid of the task id
         const entries = Object.entries(taskChanges)
             .filter(([key]) => key !== 'taskId')
 
+        // dynamically building the set clause here (we're adding $1, $2.... etc instead actual values to avoid sql injection )
         const setClause = entries.map(([key], i) => {
                 const taskField = taskChangesMap[key] || key;
                 return `${taskField} = $${i+1}`
             }).join(",\r\n");
-        console.log(setClause)
 
+        // creating an array of the values that have changed
         const values = entries.map(([_, values]) => values)
-        // console.log(`
-        //     UPDATE tasks
-        //     SET ${stringRecs}
-        //     WHERE id = ${taskChanges.taskId}
-        // `);
+
         await client.query(`
             UPDATE tasks
             SET ${setClause}
             WHERE id = $${entries.length + 1}
         `, [...values, taskChanges.taskId]);
+        // doing entries.length + 1 because we dont know how many values have been changed, so we're calculating it dynamically
     } catch (error) {
         console.error("Error saving task: ", error)
     }
 };
+
+export const deleteTask = async (taskId: number) => {
+    console.log('task_id:',taskId)
+    try {
+        await client.query(`
+            DELETE FROM tasks
+            WHERE id = $1
+        `, [taskId])
+    } catch (error) {
+        console.error("Error deleting task: ", error)
+    }
+}

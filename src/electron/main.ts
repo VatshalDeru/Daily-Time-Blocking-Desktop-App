@@ -4,7 +4,7 @@ import { isDev } from './util.js';
 import path from "path";
 import { getPreloadPath } from './pathResolver.js';
 import { error } from 'console';
-import { checkTaskTimeOverlaps, fetchTaskData, updateTask } from './tasks.js';
+import { checkTaskTimeOverlaps, deleteTask, fetchTaskData, updateTask } from './tasks.js';
 
 app.on("ready", () => {
     const mainWindow = new BrowserWindow({
@@ -37,7 +37,7 @@ app.on("ready", () => {
     ipcMain.handle("fetch-tasks", async (_, date) => {
         console.log(date);
         const tasks = await fetchTaskData(date);
-        console.log(tasks);
+        // console.log(tasks);
         return tasks;
     })
 
@@ -56,5 +56,10 @@ app.on("ready", () => {
     ipcMain.handle('update-task', async (_, task) => {
         const response = await updateTask(task);
         console.log('update tasks response in ipcMain.handle: ', response);
+    });
+
+    ipcMain.handle('delete-task', async (_, taskId) => {
+        const response = await deleteTask(taskId);
+        console.log('delete tasks response in ipcMain.handle: ', response);
     });
 });
